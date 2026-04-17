@@ -4,7 +4,7 @@ import { ChevronRight, Play } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="home" className="relative h-full w-full overflow-hidden flex items-center justify-center bg-white pt-24 md:pt-0">
+    <section id="home" className="relative h-full w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
       {/* Video Background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -12,13 +12,10 @@ export function Hero() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover brightness-100 contrast-100"
+          preload="auto"
+          className="w-full h-full object-cover brightness-75 contrast-125 transition-opacity duration-1000"
           referrerPolicy="no-referrer"
         >
-          <source
-            src="/Bannervedio2.mp4"
-            type="video/mp4"
-          />
           <source
             src="/Vedio1_Banner.mp4"
             type="video/mp4"
@@ -28,7 +25,7 @@ export function Hero() {
             type="video/mp4"
           />
         </video>
-        <div className="absolute inset-0 bg-white/10" />
+        <div className="absolute inset-0 bg-slate-900/40" />
       </div>
 
       {/* Content */}
@@ -38,10 +35,10 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 mb-4 md:mb-10 leading-tight drop-shadow-[0_2px_10px_rgba(255,255,255,0.8)]">
-            Let's <span className="text-sigma-blue underline decoration-sigma-blue/30 underline-offset-[8px]">grow</span> business together
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 md:mb-10 leading-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
+            Let's <span className="text-sigma-blue underline decoration-sigma-blue/50 underline-offset-[8px]">grow</span> business together
           </h1>
-          <p className="text-sm sm:text-base md:text-xl text-slate-800 max-w-3xl mx-auto mb-6 md:mb-12 leading-relaxed font-bold drop-shadow-[0_1px_5px_rgba(255,255,255,0.8)]">
+          <p className="text-sm sm:text-base md:text-xl text-white/90 max-w-3xl mx-auto mb-6 md:mb-12 leading-relaxed font-bold drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
             <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> provides cutting-edge application management, data analytics, and cyber security solutions to drive your business forward in the AI era.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
