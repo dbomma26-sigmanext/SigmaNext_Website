@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import logoImg from "@/assets/logo.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -42,7 +41,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 group max-w-[140px] md:max-w-none">
           <img 
-            src={logoImg} 
+            src="/sigma-logo.png?v=2026" 
             alt="SigmaNext Logo" 
             className={cn(
               "w-auto object-contain transition-all duration-500 group-hover:scale-105",
@@ -50,7 +49,6 @@ export function Navbar() {
             )}
             onLoad={() => console.log("Logo loaded")}
             onError={(e) => {
-              console.error("Logo failed to load");
               // Fallback to text logo if image fails
               e.currentTarget.style.display = 'none';
               const textLogo = e.currentTarget.nextElementSibling as HTMLElement;
@@ -76,7 +74,8 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "text-base font-bold transition-all relative group",
-                  isScrolled ? "text-slate-500 hover:text-sigma-blue" : "text-white hover:text-white/80"
+                  isScrolled ? "text-slate-500" : "text-white",
+                  "hover:text-sigma-blue"
                 )}
               >
                 {link.name}

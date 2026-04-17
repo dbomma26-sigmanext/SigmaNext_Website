@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
-import bannerVideo from "@/assets/banner-video.mp4";
 
 export function Hero() {
   return (
@@ -19,7 +18,7 @@ export function Hero() {
           onError={(e) => console.error("Video element error", e)}
         >
           <source
-            src={bannerVideo}
+            src="/hero-banner.mp4?v=2026"
             type="video/mp4"
           />
           {/* Fallback external link if local fails */}
