@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import logoImg from "@/f2.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -41,18 +42,13 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 group max-w-[140px] md:max-w-none">
           <img 
-            src="/f2.png" 
+            src={logoImg} 
             alt="SigmaNext Logo" 
             className={cn(
               "w-auto object-contain transition-all duration-500 group-hover:scale-105",
               isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
             )}
             referrerPolicy="no-referrer"
-            onError={(e) => {
-              // Fallback if f2.png is not found
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.nextElementSibling?.classList.remove('hidden');
-            }}
           />
           <div className="hidden flex items-center gap-2">
             <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
@@ -71,10 +67,16 @@ export function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-base font-bold text-slate-500 hover:text-sigma-blue transition-all relative group"
+                className={cn(
+                  "text-base font-bold transition-all relative group",
+                  isScrolled ? "text-slate-500 hover:text-sigma-blue" : "text-white hover:text-white/80"
+                )}
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-sigma-blue transition-all duration-300 group-hover:w-full" />
+                <span className={cn(
+                  "absolute -bottom-1 left-0 w-0 h-0.5 bg-sigma-blue transition-all duration-300 group-hover:w-full",
+                  !isScrolled && "bg-white"
+                )} />
               </a>
             ))}
           </div>

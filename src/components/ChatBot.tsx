@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleGenAI } from "@google/genai";
 import { cn } from "@/lib/utils";
+import shieldImg from "@/logo_shield_f1.png";
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +65,7 @@ export function ChatBot() {
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/logo_shield_f1.png" 
+                    src={shieldImg} 
                     alt="SigmaNext AI" 
                     className="w-full h-full object-contain scale-110"
                     referrerPolicy="no-referrer"
@@ -162,7 +163,7 @@ export function ChatBot() {
               className="relative w-full h-full p-1"
             >
               <img 
-                src="/logo_shield_f1.png" 
+                src={shieldImg} 
                 alt="Chat Icon" 
                 className="w-full h-full object-contain scale-150"
                 referrerPolicy="no-referrer"
