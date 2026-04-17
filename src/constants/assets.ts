@@ -38,5 +38,8 @@ export const ASSETS = {
       SECONDARY: 'https://cdn-icons-png.flaticon.com/512/4712/4712035.png',
       FALLBACK: 'https://api.iconify.design/lucide:bot.svg?color=%230066cc'
     }
+  },
+  GALLERY: {
+    EAGLE_CREST: 'https://images.unsplash.com/photo-1564349683136-77e08bef1ef1?auto=format&fit=crop&w=800&q=80' // High-quality Eagle Crest reference
   }
 };

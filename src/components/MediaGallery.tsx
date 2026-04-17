@@ -23,6 +23,14 @@ const mediaItems = [
     fit: "contain"
   },
   {
+    title: "Strategic Eagle Crest",
+    type: "image",
+    src: ASSETS.GALLERY.EAGLE_CREST,
+    format: ".png / .jpg",
+    support: "Elite Branding",
+    fit: "contain"
+  },
+  {
     title: "High Dynamic Range (JPG)",
     type: "image",
     src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
