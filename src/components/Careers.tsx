@@ -60,8 +60,8 @@ export function Careers() {
   };
 
   return (
-    <section id="careers" className="h-full w-full py-12 md:py-16 px-6 bg-white flex flex-col justify-center pt-24 md:pt-0">
-      <div className="max-w-7xl mx-auto w-full">
+    <section id="careers" className="min-h-screen w-full py-12 md:py-16 px-6 bg-white flex flex-col justify-start md:justify-center pt-32 md:pt-0">
+      <div className="max-w-7xl mx-auto w-full pb-12">
         <div className="text-center mb-8 md:mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -198,7 +198,7 @@ export function Careers() {
                     </div>
                   </div>
 
-                  <Button type="submit" variant="outline" className="w-full h-14 rounded-xl text-base font-extrabold group border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300">
+                  <Button type="submit" className="w-full h-14 rounded-xl text-base font-extrabold group bg-slate-900 text-white hover:bg-slate-800 transition-all duration-300 shadow-xl shadow-slate-200">
                     Submit Application
                     <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </Button>

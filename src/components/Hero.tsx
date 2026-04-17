@@ -1,28 +1,30 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
+import bannerVideo from "@/assets/banner-video.mp4";
 
 export function Hero() {
   return (
-    <section id="home" className="relative h-full w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
+    <section id="home" className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 h-full w-full">
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover brightness-75 contrast-125 transition-opacity duration-1000"
-          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover brightness-75 contrast-125 select-none"
+          onCanPlay={() => console.log("Video can play")}
+          onError={(e) => console.error("Video element error", e)}
         >
-          {/* Using a reliable external link first to verify the player works */}
           <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
+            src={bannerVideo}
             type="video/mp4"
           />
+          {/* Fallback external link if local fails */}
           <source
-            src="/Vedio1_Banner.mp4"
+            src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
             type="video/mp4"
           />
         </video>

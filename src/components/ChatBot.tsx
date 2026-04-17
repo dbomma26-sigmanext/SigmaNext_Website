@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleGenAI } from "@google/genai";
 import { cn } from "@/lib/utils";
-import shieldImg from "@/logo_shield_f1.png";
+import shieldImg from "@/assets/chatbot-shield.png";
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +68,9 @@ export function ChatBot() {
                     src={shieldImg} 
                     alt="SigmaNext AI" 
                     className="w-full h-full object-contain scale-110"
-                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 </div>
                 <div>
@@ -166,7 +168,9 @@ export function ChatBot() {
                 src={shieldImg} 
                 alt="Chat Icon" 
                 className="w-full h-full object-contain scale-150"
-                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
               />
             </motion.div>
           )}

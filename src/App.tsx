@@ -20,28 +20,28 @@ export default function App() {
     <div id="main-scroll-container" className="h-screen overflow-y-auto snap-y snap-mandatory bg-background text-foreground selection:bg-primary/30 scroll-smooth">
       <Navbar />
       <main className="w-full">
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <Hero />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <Services />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <WhyChooseUs />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <Industries />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <TechEcosystem />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <About />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <Careers />
         </section>
-        <section className="snap-start w-full h-screen overflow-hidden">
+        <section className="snap-start w-full min-h-screen overflow-visible">
           <Contact />
         </section>
         <section className="snap-start w-full">

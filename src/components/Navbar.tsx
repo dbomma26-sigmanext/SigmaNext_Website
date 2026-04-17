@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import logoImg from "@/f2.png";
+import logoImg from "@/assets/logo.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -48,9 +48,16 @@ export function Navbar() {
               "w-auto object-contain transition-all duration-500 group-hover:scale-105",
               isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
             )}
-            referrerPolicy="no-referrer"
+            onLoad={() => console.log("Logo loaded")}
+            onError={(e) => {
+              console.error("Logo failed to load");
+              // Fallback to text logo if image fails
+              e.currentTarget.style.display = 'none';
+              const textLogo = e.currentTarget.nextElementSibling as HTMLElement;
+              if (textLogo) textLogo.style.display = 'flex';
+            }}
           />
-          <div className="hidden flex items-center gap-2">
+          <div className="hidden items-center gap-2">
             <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">Σ</span>
             </div>
