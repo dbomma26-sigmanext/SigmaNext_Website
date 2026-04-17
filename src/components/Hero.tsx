@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
-import heroVideo from "@/assets/hero-banner.mp4";
+import { ASSETS } from "@/constants/assets";
 
 export function Hero() {
   return (
@@ -25,15 +25,15 @@ export function Hero() {
           }}
         >
           <source
-            src={heroVideo}
+            src={ASSETS.VECTORS.HERO_VIDEO.PRIMARY}
             type="video/mp4"
           />
           <source
-            src="/hero-banner.mp4"
+            src={ASSETS.VECTORS.HERO_VIDEO.SECONDARY}
             type="video/mp4"
           />
           <source
-            src="https://cdn.pixabay.com/video/2016/09/21/5361-183768853_tiny.mp4"
+            src={ASSETS.VECTORS.HERO_VIDEO.FALLBACK}
             type="video/mp4"
           />
           <source

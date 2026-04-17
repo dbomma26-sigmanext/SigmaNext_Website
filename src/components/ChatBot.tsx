@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GoogleGenAI } from "@google/genai";
 import { cn } from "@/lib/utils";
-import chatbotIcon from "@/assets/chatbot-icon.png";
+import { ASSETS } from "@/constants/assets";
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,14 +65,18 @@ export function ChatBot() {
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center overflow-hidden">
                   <img 
-                    src={chatbotIcon} 
+                    src={ASSETS.ICONS.CHATBOT.PRIMARY} 
                     alt="SigmaNext AI" 
+                    referrerPolicy="no-referrer"
                     className="w-full h-full object-contain scale-110 relative z-10"
                     onError={(e) => {
                       const img = e.currentTarget;
-                      if (!img.dataset.triedPublic) {
-                        img.dataset.triedPublic = "true";
-                        img.src = "/chatbot-icon.png";
+                      if (!img.dataset.triedSecondary) {
+                        img.dataset.triedSecondary = "true";
+                        img.src = ASSETS.ICONS.CHATBOT.SECONDARY;
+                      } else if (!img.dataset.triedExternal) {
+                        img.dataset.triedExternal = "true";
+                        img.src = ASSETS.ICONS.CHATBOT.FALLBACK;
                       } else {
                         img.style.display = 'none';
                         const fallback = img.parentElement?.querySelector('.header-fallback') as HTMLElement;
@@ -176,14 +180,18 @@ export function ChatBot() {
               className="relative w-full h-full p-1"
             >
               <img 
-                src={chatbotIcon} 
+                src={ASSETS.ICONS.CHATBOT.PRIMARY} 
                 alt="Chat Icon" 
+                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain scale-150 absolute inset-0 z-10"
                 onError={(e) => {
                   const img = e.currentTarget;
-                  if (!img.dataset.triedPublic) {
-                    img.dataset.triedPublic = "true";
-                    img.src = "/chatbot-icon.png";
+                  if (!img.dataset.triedSecondary) {
+                    img.dataset.triedSecondary = "true";
+                    img.src = ASSETS.ICONS.CHATBOT.SECONDARY;
+                  } else if (!img.dataset.triedExternal) {
+                    img.dataset.triedExternal = "true";
+                    img.src = ASSETS.ICONS.CHATBOT.FALLBACK;
                   } else {
                     img.style.display = 'none';
                     // Show fallback icon

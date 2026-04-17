@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import primaryLogo from "@/assets/sigma-logo.png";
+import { ASSETS } from "@/constants/assets";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -41,28 +41,36 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 group max-w-[140px] md:max-w-none">
-          <img 
-            src={primaryLogo} 
-            alt="SigmaNext Logo" 
-            className={cn(
-              "w-auto object-contain transition-all duration-500 group-hover:scale-105",
-              isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
-            )}
-            onLoad={() => console.log("Logo loaded successfully")}
-            onError={(e) => {
-              const img = e.currentTarget;
-              // If bundling fails or hash mismatch, try the static root once
-              if (!img.dataset.triedPublic) {
-                img.dataset.triedPublic = "true";
-                img.src = "/sigma-logo.png";
-              } else {
-                console.log("All logo images failed, showing text fallback");
-                img.style.display = 'none';
-                const textLogo = img.nextElementSibling as HTMLElement;
-                if (textLogo) textLogo.style.display = 'flex';
-              }
-            }}
-          />
+          <div className="relative">
+            <img 
+              src={ASSETS.LOGO.PRIMARY} 
+              alt="SigmaNext Logo" 
+              referrerPolicy="no-referrer"
+              className={cn(
+                "w-auto object-contain transition-all duration-500 group-hover:scale-105",
+                isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
+              )}
+              onLoad={(e) => {
+                console.log("Logo loaded successfully");
+                (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'none';
+              }}
+              onError={(e) => {
+                const img = e.currentTarget;
+                if (!img.dataset.triedSecondary) {
+                  img.dataset.triedSecondary = "true";
+                  img.src = ASSETS.LOGO.SECONDARY;
+                } else if (!img.dataset.triedExternal) {
+                  img.dataset.triedExternal = "true";
+                  img.src = ASSETS.LOGO.EXTERNAL;
+                } else {
+                  console.log("All logo images failed, showing text fallback");
+                  img.style.display = 'none';
+                  const textLogo = img.parentElement?.nextElementSibling as HTMLElement;
+                  if (textLogo) textLogo.style.display = 'flex';
+                }
+              }}
+            />
+          </div>
           <div className="hidden items-center gap-2">
             <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">Σ</span>
