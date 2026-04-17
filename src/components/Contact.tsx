@@ -113,10 +113,12 @@ export function Contact() {
                     <Textarea required name="message" placeholder="Tell us about your project..." className="rounded-xl min-h-[100px] md:min-h-[120px] resize-none bg-slate-50/50 border-slate-100 focus:bg-white transition-all p-4 text-sm" />
                   </div>
 
-                  <Button type="submit" className="w-full h-14 rounded-xl text-base font-extrabold group bg-slate-900 text-white hover:bg-slate-800 transition-all duration-300 shadow-xl shadow-slate-200">
-                    Send Message
-                    <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </Button>
+                  <div className="flex justify-center">
+                    <Button type="submit" size="lg" className="rounded-full px-12 h-14 text-sm font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 group shadow-lg shadow-black/5">
+                      Send Message
+                      <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </Button>
+                  </div>
                 </motion.form>
               ) : (
                 <motion.div 

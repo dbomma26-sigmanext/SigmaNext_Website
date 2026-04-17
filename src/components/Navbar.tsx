@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,15 +20,33 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const container = document.getElementById("main-scroll-container");
     const handleScroll = () => {
-      if (container) {
-        setIsScrolled(container.scrollTop > 50);
-      }
+      setIsScrolled(window.scrollY > 50);
     };
-    container?.addEventListener("scroll", handleScroll);
-    return () => container?.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      const offset = 80; // Adjust for navbar height
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elemRect = elem.getBoundingClientRect().top;
+      const elemPosition = elemRect - bodyRect;
+      const offsetPosition = elemPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      // Update URL hash without jumping
+      window.history.pushState(null, "", href);
+    }
+  };
 
   return (
     <nav
@@ -89,6 +107,7 @@ export function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => scrollToSection(e, link.href)}
                 className={cn(
                   "text-base font-bold transition-all relative group",
                   isScrolled ? "text-slate-500" : "text-white",
@@ -103,8 +122,8 @@ export function Navbar() {
               </a>
             ))}
           </div>
-          <a href="#contact">
-            <Button size="lg" variant="outline" className="rounded-full px-8 font-bold border-slate-200 text-slate-600 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300">
+          <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")}>
+            <Button size="lg" className="rounded-full px-8 font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 shadow-md">
               Get Started <ChevronRight className="ml-2 h-5 w-5" />
             </Button>
           </a>
@@ -133,12 +152,12 @@ export function Navbar() {
                 key={link.name}
                 href={link.href}
                 className="text-xl font-bold text-slate-900 hover:text-sigma-blue"
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => scrollToSection(e, link.href)}
               >
                 {link.name}
               </a>
             ))}
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+            <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")}>
               <Button className="w-full rounded-full font-bold py-6 text-lg">Get Started</Button>
             </a>
           </motion.div>

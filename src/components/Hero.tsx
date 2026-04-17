@@ -1,9 +1,28 @@
+import React from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
 import { ASSETS } from "@/constants/assets";
 
 export function Hero() {
+  const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const elem = document.getElementById("services");
+    if (elem) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elemRect = elem.getBoundingClientRect().top;
+      const elemPosition = elemRect - bodyRect;
+      const offsetPosition = elemPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, "", "#services");
+    }
+  };
+
   return (
     <section id="home" className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
       {/* Video Background */}
@@ -15,7 +34,7 @@ export function Hero() {
           playsInline
           preload="auto"
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover brightness-[0.85] contrast-[1.1] select-none scale-105"
+          className="w-full h-full object-cover brightness-[0.8] contrast-[1.2] select-none scale-105"
           onCanPlay={() => {
             console.log("Hero background video is active");
           }}
@@ -53,7 +72,7 @@ export function Hero() {
             type="video/mp4"
           />
         </video>
-        <div className="absolute inset-0 bg-slate-900/40" />
+        <div className="absolute inset-0 bg-slate-900/50" />
       </div>
 
       {/* Content */}
@@ -70,8 +89,8 @@ export function Hero() {
             <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> provides cutting-edge application management, data analytics, and cyber security solutions to drive your business forward in the AI era.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#services">
-              <Button size="lg" variant="outline" className="rounded-full px-6 md:px-10 h-10 md:h-14 text-sm md:text-lg font-bold border-slate-200 bg-white/50 backdrop-blur-sm text-slate-700 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 group">
+            <a href="#services" onClick={scrollToServices}>
+              <Button size="lg" className="rounded-full px-10 md:px-14 h-12 md:h-14 text-base md:text-lg font-bold bg-gradient-to-b from-white via-slate-100 to-slate-300 text-slate-900 hover:from-white hover:to-slate-200 border border-slate-200 transition-all duration-300 group shadow-[0_4px_15px_-3px_rgba(0,0,0,0.1),0_10px_20px_-5px_rgba(0,0,0,0.2)]">
                 Explore Services
                 <ChevronRight className="ml-2 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
               </Button>

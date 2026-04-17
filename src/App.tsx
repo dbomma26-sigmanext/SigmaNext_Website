@@ -6,7 +6,6 @@
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { LogoBanner } from "@/components/LogoBanner";
-import { VideoShowcase } from "@/components/VideoShowcase";
 import { Services } from "@/components/Services";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Industries } from "@/components/Industries";
@@ -19,40 +18,37 @@ import { ChatBot } from "@/components/ChatBot";
 
 export default function App() {
   return (
-    <div id="main-scroll-container" className="h-screen overflow-y-auto snap-y snap-mandatory bg-background text-foreground selection:bg-primary/30 scroll-smooth">
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
       <Navbar />
       <main className="w-full">
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <Hero />
         </section>
-        <section className="snap-start w-full overflow-visible h-auto">
+        <section className="w-full overflow-visible h-auto border-b border-slate-50">
           <LogoBanner />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <Services />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <WhyChooseUs />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <Industries />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <TechEcosystem />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <About />
         </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <Careers />
         </section>
-        <section id="testing" className="snap-start w-full min-h-screen overflow-visible">
-          <VideoShowcase />
-        </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
+        <section className="w-full min-h-screen overflow-visible">
           <Contact />
         </section>
-        <section className="snap-start w-full">
+        <section className="w-full">
           <Footer />
         </section>
       </main>

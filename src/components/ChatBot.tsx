@@ -137,7 +137,7 @@ export function ChatBot() {
                 <Button 
                   type="submit" 
                   disabled={isLoading}
-                  className="w-12 h-12 rounded-xl p-0 flex-shrink-0"
+                  className="w-12 h-12 rounded-xl p-0 flex-shrink-0 bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 shadow-sm"
                 >
                   <Send className="w-5 h-5" />
                 </Button>

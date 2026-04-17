@@ -203,7 +203,7 @@ export function Industries() {
                     </p>
                     <Button 
                       onClick={() => setSelectedIndustry(null)}
-                      className="w-full rounded-full py-6 text-lg font-bold"
+                      className="w-full rounded-full py-6 text-lg font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 shadow-md"
                     >
                       Close Details
                     </Button>
