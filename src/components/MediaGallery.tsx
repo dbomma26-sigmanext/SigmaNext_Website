@@ -1,48 +1,74 @@
 import { motion } from "motion/react";
 import { Image as ImageIcon, Video as VideoIcon, FileCode, CheckCircle2 } from "lucide-react";
+import { ASSETS } from "@/constants/assets";
+import { cn } from "@/lib/utils";
 
 const mediaItems = [
+  {
+    title: "SigmaNext Corporate Logo",
+    type: "image",
+    src: ASSETS.LOGO.PRIMARY,
+    format: ".png / .svg",
+    support: "Brand Identity",
+    fallback: ASSETS.LOGO.EXTERNAL,
+    fit: "contain"
+  },
+  {
+    title: "Intelligent Assistant Icon",
+    type: "image",
+    src: ASSETS.ICONS.CHATBOT.PRIMARY,
+    format: ".png",
+    support: "AI Interface",
+    fallback: ASSETS.ICONS.CHATBOT.SECONDARY,
+    fit: "contain"
+  },
   {
     title: "High Dynamic Range (JPG)",
     type: "image",
     src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
     format: ".jpg",
-    support: "Universal Support"
+    support: "Universal Support",
+    fit: "cover"
   },
   {
     title: "Alpha Transparency (PNG)",
     type: "image",
     src: "https://www.vectorlogo.zone/logos/snowflake/snowflake-icon.svg", // SVG as proxy for testing transparent feels
     format: ".png / .svg",
-    support: "Universal Support"
+    support: "Universal Support",
+    fit: "contain"
   },
   {
     title: "Next-Gen Format (WebP)",
     type: "image",
     src: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80",
     format: ".webp",
-    support: "Modern Browsers"
+    support: "Modern Browsers",
+    fit: "cover"
   },
   {
     title: "Vector Graphics (SVG)",
     type: "image",
     src: "https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg",
     format: ".svg",
-    support: "Infinite Scalability"
+    support: "Infinite Scalability",
+    fit: "contain"
   },
   {
     title: "Motion Content (MP4)",
     type: "video",
     src: "https://videos.pexels.com/video-files/3130182/3130182-hd_1920_1080_30fps.mp4",
     format: ".mp4",
-    support: "High Performance"
+    support: "High Performance",
+    fit: "cover"
   },
   {
     title: "Stock Assets",
     type: "image",
     src: "https://picsum.photos/seed/tech/800/600",
     format: "Random/CDN",
-    support: "Cacheable"
+    support: "Cacheable",
+    fit: "cover"
   }
 ];
 
@@ -85,8 +111,18 @@ export function MediaGallery() {
                   <img 
                     src={item.src} 
                     alt={item.title} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                    className={cn(
+                      "w-full h-full transition-transform duration-700 group-hover:scale-110",
+                      item.fit === "contain" ? "object-contain p-8 bg-slate-50/50" : "object-cover"
+                    )}
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      const fallback = (item as any).fallback;
+                      if (fallback && img.src !== fallback) {
+                        img.src = fallback;
+                      }
+                    }}
                   />
                 ) : (
                   <video 
@@ -94,7 +130,10 @@ export function MediaGallery() {
                     loop 
                     muted 
                     playsInline 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className={cn(
+                      "w-full h-full transition-transform duration-700 group-hover:scale-110",
+                      item.fit === "contain" ? "object-contain p-8" : "object-cover"
+                    )}
                     referrerPolicy="no-referrer"
                   >
                     <source src={item.src} type="video/mp4" />
