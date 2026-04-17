@@ -14,14 +14,14 @@ export function Hero() {
           muted
           playsInline
           preload="auto"
-          className="w-full h-full object-cover brightness-75 contrast-125 select-none"
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-cover brightness-[0.85] contrast-[1.1] select-none scale-105"
           onCanPlay={() => {
             console.log("Hero background video is active");
           }}
           onError={(e) => {
             const video = e.currentTarget;
             console.error("Video element global error - checking alternate sources");
-            // If the video somehow fails to start even with multiple sources, try manually setting to local backup
             if (video.networkState === video.NETWORK_NO_SOURCE) {
                console.warn("No sources resolved, forcing fallback background");
                const container = document.getElementById("hero-video-container");
@@ -29,11 +29,11 @@ export function Hero() {
             }
           }}
         >
-          {/* Attempt 1: Your uploaded banner video (Primary source) */}
+          {/* Attempt 1: Your uploaded banner video (Primary source via Vite Import) */}
           <source
             src={ASSETS.VECTORS.HERO_VIDEO.PRIMARY}
             type="video/mp4"
-            onError={() => console.warn("Primary local source failed - trying Pexels fallback")}
+            onError={() => console.warn("Primary imported source failed - trying Pexels fallback")}
           />
           {/* Attempt 2: Requested Pexels AI Animation (Reliable cloud backup) */}
           <source
@@ -41,18 +41,13 @@ export function Hero() {
             type="video/mp4"
             onError={() => console.warn("Pexels fallback failed - trying alternate local backup")}
           />
-          {/* Attempt 3: Legacy local source (Fallback link) */}
+          {/* Attempt 3: Legacy local source (Backup via Vite Import) */}
           <source
             src={ASSETS.VECTORS.HERO_VIDEO.BACKUP_LOCAL}
             type="video/mp4"
-            onError={() => console.warn("Legacy backup failed - trying cloud backup")}
+            onError={() => console.warn("Legacy backup failed - trying working cloud fallback")}
           />
-          {/* Attempt 4: High-quality Tech Abstract (Cloud backup) */}
-          <source
-            src="https://cdn.pixabay.com/video/2016/09/21/5361-183768853_tiny.mp4"
-            type="video/mp4"
-          />
-          {/* Attempt 4: The Guaranteed "Bunny" Reference (Network check) */}
+          {/* Attempt 4: The Guaranteed working video from Pexels (Connectivity) */}
           <source
             src={ASSETS.VECTORS.HERO_VIDEO.FALLBACK}
             type="video/mp4"

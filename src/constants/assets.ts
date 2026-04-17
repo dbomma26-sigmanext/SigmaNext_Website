@@ -4,6 +4,9 @@
  * Standardized filenames for maximum reliability.
  */
 
+import heroVideo from '../assets/hero.mp4';
+import heroLegacyVideo from '../assets/hero-legacy.mp4';
+
 export const ASSETS = {
   LOGO: {
     PRIMARY: '/logo.png',
@@ -13,14 +16,14 @@ export const ASSETS = {
   },
   VECTORS: {
     HERO_VIDEO: {
-      PRIMARY: '/hero.mp4', 
+      PRIMARY: heroVideo, 
       SECONDARY: 'https://videos.pexels.com/video-files/18069165/18069165-hd_1920_1080_24fps.mp4', 
-      BACKUP_LOCAL: '/hero-legacy.mp4',
-      FALLBACK: 'https://www.w3schools.com/html/mov_bbb.mp4' 
+      BACKUP_LOCAL: heroLegacyVideo,
+      FALLBACK: 'https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4' // Removed Bunny, using working Pexels Connectivity as final fallback
     },
     TEST_VIDEOS: [
-      { id: 'user-primary', url: '/hero.mp4', title: 'Main Hero Upload' },
-      { id: 'user-legacy', url: '/hero-legacy.mp4', title: 'Legacy Hero Upload' },
+      { id: 'user-primary', url: heroVideo, title: 'Main Hero Upload' },
+      { id: 'user-legacy', url: heroLegacyVideo, title: 'Legacy Hero Upload' },
       { id: 'tech-abstract', url: 'https://videos.pexels.com/video-files/7547447/7547447-hd_1920_1080_25fps.mp4', title: 'Tech Abstract' },
       { id: 'data-grid', url: 'https://videos.pexels.com/video-files/4491539/4491539-hd_1920_1080_25fps.mp4', title: 'Data Grid' },
       { id: 'ai-neural', url: 'https://videos.pexels.com/video-files/8091524/8091524-hd_1920_1080_25fps.mp4', title: 'AI Neural Network' },
