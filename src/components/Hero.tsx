@@ -36,10 +36,6 @@ export function Hero() {
             src={ASSETS.VECTORS.HERO_VIDEO.FALLBACK}
             type="video/mp4"
           />
-          <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
-            type="video/mp4"
-          />
         </video>
         <div className="absolute inset-0 bg-slate-900/40" />
       </div>
