@@ -14,7 +14,6 @@ import { Careers } from "@/components/Careers";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { ChatBot } from "@/components/ChatBot";
-import { MediaDebugSection } from "@/components/MediaDebugSection";
 
 export default function App() {
   return (
@@ -38,9 +37,6 @@ export default function App() {
         </section>
         <section className="snap-start w-full min-h-screen overflow-visible">
           <About />
-        </section>
-        <section className="snap-start w-full min-h-screen overflow-visible">
-          <MediaDebugSection />
         </section>
         <section className="snap-start w-full min-h-screen overflow-visible">
           <Careers />

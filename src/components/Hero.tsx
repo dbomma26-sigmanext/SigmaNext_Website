@@ -29,7 +29,7 @@ export function Hero() {
             type="video/mp4"
           />
           <source
-            src={ASSETS.VECTORS.HERO_VIDEO.SECONDARY}
+            src="https://cdn.pixabay.com/video/2016/09/21/5361-183768853_tiny.mp4"
             type="video/mp4"
           />
           <source
