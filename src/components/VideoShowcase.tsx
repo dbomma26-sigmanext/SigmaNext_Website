@@ -57,8 +57,22 @@ export function VideoShowcase() {
                 muted
                 loop
                 playsInline
+                preload="auto"
                 referrerPolicy="no-referrer"
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+                onError={(e) => {
+                  const videoElement = e.currentTarget;
+                  console.error(`Gallery video failed: ${video.title}`);
+                  videoElement.style.display = 'none';
+                  const parent = videoElement.parentElement;
+                  if (parent) {
+                    parent.style.background = 'linear-gradient(45deg, #020617, #0f172a)';
+                    const errorMsg = document.createElement('div');
+                    errorMsg.className = 'absolute inset-0 flex items-center justify-center text-[10px] text-slate-500 font-mono text-center px-4';
+                    errorMsg.innerText = 'SOURCE RELOAD TRIGGERED';
+                    parent.appendChild(errorMsg);
+                  }
+                }}
               />
               <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent">
                 <div className="flex items-center gap-3 mb-2">
