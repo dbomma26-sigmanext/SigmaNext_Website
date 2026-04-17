@@ -66,11 +66,16 @@ export function ChatBot() {
                   <img 
                     src="/chatbot-icon.png?v=2026" 
                     alt="SigmaNext AI" 
-                    className="w-full h-full object-contain scale-110"
+                    className="w-full h-full object-contain scale-110 relative z-10"
                     onError={(e) => {
                       e.currentTarget.style.display = 'none';
+                      const fallback = e.currentTarget.parentElement?.querySelector('.header-fallback') as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
                     }}
                   />
+                  <div className="header-fallback absolute inset-0 hidden items-center justify-center bg-white/20 rounded-xl z-0">
+                    <MessageSquare className="w-5 h-5 text-white" />
+                  </div>
                 </div>
                 <div>
                   <h3 className="font-bold">SigmaNext AI</h3>
@@ -166,11 +171,25 @@ export function ChatBot() {
               <img 
                 src="/chatbot-icon.png?v=2026" 
                 alt="Chat Icon" 
-                className="w-full h-full object-contain scale-150"
+                className="w-full h-full object-contain scale-150 absolute inset-0 z-10"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
+                  // Show fallback icon
+                  const fallback = e.currentTarget.parentElement?.querySelector('.chatbot-fallback') as HTMLElement;
+                  if (fallback) {
+                    fallback.style.opacity = '1';
+                    fallback.style.display = 'flex';
+                  }
                 }}
               />
+              <div 
+                className="chatbot-fallback absolute inset-0 w-full h-full flex items-center justify-center opacity-0 transition-opacity z-0"
+                style={{ opacity: 0, display: 'none' }}
+              >
+                <div className="bg-sigma-blue rounded-full p-2">
+                  <MessageSquare className="w-8 h-8 text-white" />
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

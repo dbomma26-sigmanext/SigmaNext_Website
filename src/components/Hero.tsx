@@ -6,7 +6,7 @@ export function Hero() {
   return (
     <section id="home" className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0 h-full w-full">
+      <div className="absolute inset-0 z-0 h-full w-full bg-[#0a1128]">
         <video
           autoPlay
           loop
@@ -14,14 +14,23 @@ export function Hero() {
           playsInline
           preload="auto"
           className="w-full h-full object-cover brightness-75 contrast-125 select-none"
-          onCanPlay={() => console.log("Video can play")}
-          onError={(e) => console.error("Video element error", e)}
+          onCanPlay={(e) => {
+            console.log("Video can play");
+            (e.currentTarget.parentElement as HTMLElement).style.background = 'transparent';
+          }}
+          onError={(e) => {
+            console.error("Video element error", e);
+            (e.currentTarget.parentElement as HTMLElement).style.background = '#0a1128';
+          }}
         >
           <source
             src="/hero-banner.mp4?v=2026"
             type="video/mp4"
           />
-          {/* Fallback external link if local fails */}
+          <source
+            src="https://cdn.pixabay.com/video/2016/09/21/5361-183768853_tiny.mp4"
+            type="video/mp4"
+          />
           <source
             src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
             type="video/mp4"

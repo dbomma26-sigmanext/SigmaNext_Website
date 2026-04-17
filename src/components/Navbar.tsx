@@ -47,12 +47,21 @@ export function Navbar() {
               "w-auto object-contain transition-all duration-500 group-hover:scale-105",
               isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
             )}
-            onLoad={() => console.log("Logo loaded")}
+            onLoad={() => console.log("Logo loaded successfully")}
             onError={(e) => {
-              // Fallback to text logo if image fails
-              e.currentTarget.style.display = 'none';
-              const textLogo = e.currentTarget.nextElementSibling as HTMLElement;
-              if (textLogo) textLogo.style.display = 'flex';
+              const img = e.currentTarget;
+              if (img.src.includes('sigma-logo.png')) {
+                console.log("Primary logo failed, trying secondary logo.png");
+                img.src = '/logo.png?v=2026';
+              } else if (img.src.includes('logo.png')) {
+                console.log("Secondary logo failed, trying logo1.png");
+                img.src = '/logo1.png?v=2026';
+              } else {
+                console.log("All logo images failed, showing text fallback");
+                img.style.display = 'none';
+                const textLogo = img.nextElementSibling as HTMLElement;
+                if (textLogo) textLogo.style.display = 'flex';
+              }
             }}
           />
           <div className="hidden items-center gap-2">
