@@ -156,28 +156,29 @@ export function Industries() {
       {/* Full Write-up Modal */}
       <AnimatePresence>
         {selectedIndustry && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+          <div className="fixed inset-0 z-[100] flex items-start md:items-center justify-center px-6 overflow-y-auto py-12 md:py-0">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedIndustry(null)}
-              className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"
+              className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm"
             />
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-3xl bg-white rounded-[2.5rem] overflow-hidden shadow-2xl"
+              className="relative w-full max-w-3xl bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl flex flex-col max-h-[90vh] md:max-h-none"
             >
               <button 
                 onClick={() => setSelectedIndustry(null)}
-                className="absolute top-6 right-6 z-10 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+                className="absolute top-4 right-4 md:top-6 md:right-6 z-50 p-2 bg-white/80 backdrop-blur-md hover:bg-slate-100 rounded-full shadow-lg transition-all"
               >
-                <X className="w-6 h-6 text-slate-600" />
+                <X className="w-5 h-5 md:w-6 md:h-6 text-slate-600" />
               </button>
               
-              <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="overflow-y-auto scrollbar-hide">
+                <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="h-64 md:h-auto">
                   <img 
                     src={selectedIndustry.image} 
@@ -209,6 +210,7 @@ export function Industries() {
                     </Button>
                   </div>
                 </div>
+              </div>
               </div>
             </motion.div>
           </div>

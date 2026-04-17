@@ -28,6 +28,7 @@ const mediaItems = [
     src: ASSETS.GALLERY.EAGLE_CREST,
     format: ".png / .jpg",
     support: "Elite Branding",
+    fallback: "https://api.iconify.design/lucide:shield-check.svg?color=%230056b3",
     fit: "contain"
   },
   {

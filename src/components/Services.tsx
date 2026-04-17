@@ -85,7 +85,7 @@ export function Services() {
           </motion.p>
         </div>
 
-        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-x-visible pb-6 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -93,7 +93,7 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="min-w-[85%] md:min-w-0 h-full snap-center"
+              className="h-full"
             >
               <Card className="group relative hover:shadow-[0_0_50px_-12px_rgba(0,86,179,0.3)] hover:-translate-y-1 transition-all duration-500 border-slate-100 bg-white overflow-hidden h-full shadow-sm">
                 <div className="relative h-24 md:h-32 overflow-hidden">

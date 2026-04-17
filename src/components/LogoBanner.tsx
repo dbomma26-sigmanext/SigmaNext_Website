@@ -8,8 +8,8 @@ export function LogoBanner() {
   return (
     <section className="w-full py-16 bg-white overflow-hidden border-y border-slate-100">
       <div className="max-w-7xl mx-auto px-6 mb-10 text-center">
-        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Powering Innovation With</h2>
-        <p className="text-slate-900 font-bold text-lg">World Class Partners & Technology</p>
+        <h2 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Powering Transformation With</h2>
+        <p className="text-slate-900 font-bold text-lg leading-tight md:text-xl">World Class Innovation with World Class Technology</p>
       </div>
 
       <div className="relative flex overflow-x-hidden group">
@@ -27,7 +27,7 @@ export function LogoBanner() {
           {partners.map((partner, index) => (
             <div 
               key={`${partner.name}-${index}`} 
-              className="flex items-center justify-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 cursor-pointer"
+              className="flex items-center justify-center opacity-80 hover:opacity-100 transition-all duration-500 cursor-pointer"
             >
               <img 
                 src={partner.logo} 

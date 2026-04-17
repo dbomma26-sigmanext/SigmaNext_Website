@@ -86,7 +86,7 @@ export function Hero() {
             Let's <span className="text-sigma-blue underline decoration-sigma-blue/50 underline-offset-[8px]">grow</span> business together
           </h1>
           <p className="text-sm sm:text-base md:text-xl text-white/90 max-w-3xl mx-auto mb-6 md:mb-12 leading-relaxed font-bold drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
-            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> provides cutting-edge application management, data analytics, and cyber security solutions to drive your business forward in the AI era.
+            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> provides cutting-edge application management, data analytics, and cyber security solutions to drive your business forward.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#services" onClick={scrollToServices}>
