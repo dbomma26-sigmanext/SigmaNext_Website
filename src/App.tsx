@@ -11,6 +11,7 @@ import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { Industries } from "@/components/Industries";
 import { TechEcosystem } from "@/components/TechEcosystem";
 import { About } from "@/components/About";
+import { MediaGallery } from "@/components/MediaGallery";
 import { Careers } from "@/components/Careers";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -41,6 +42,9 @@ export default function App() {
         </section>
         <section className="w-full min-h-screen overflow-visible">
           <About />
+        </section>
+        <section className="w-full overflow-visible">
+          <MediaGallery />
         </section>
         <section className="w-full min-h-screen overflow-visible">
           <Careers />
