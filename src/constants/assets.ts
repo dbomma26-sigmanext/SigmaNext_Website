@@ -1,35 +1,27 @@
-import logoPng from "@/assets/sigma-logo.png";
-import chatbotIcon from "@/assets/chatbot-icon.png";
-import heroBannerMp4 from "@/assets/hero-banner.mp4";
-
 /**
  * Asset Constants
- * Using multiple sources to ensure reliability across environments (Local, AI Studio, Vercel)
+ * Using direct public paths as PRIMARY to ensure stability on Vercel deployments.
  */
 
 export const ASSETS = {
   LOGO: {
-    PRIMARY: logoPng,
-    SECONDARY: '/sigma-logo.png',
-    EXTERNAL: 'https://img.logoipsum.com/296.svg', // Stable professional placeholder
+    PRIMARY: '/sigma-logo.png',
+    SECONDARY: 'https://img.logoipsum.com/296.svg', // High-quality tech logo fallback
+    EXTERNAL: 'https://raw.githubusercontent.com/sigma-next/assets/main/logo.png', 
     FALLBACK_TEXT: 'SIGMA'
-  },
-  TEST: {
-    IMAGE: 'https://picsum.photos/seed/sigma/800/600',
-    VIDEO: 'https://www.w3schools.com/html/mov_bbb.mp4'
   },
   VECTORS: {
     HERO_VIDEO: {
-      PRIMARY: heroBannerMp4,
-      SECONDARY: '/hero-banner.mp4',
-      FALLBACK: 'https://www.w3schools.com/html/mov_bbb.mp4' // Use the one that worked in user's test as fallback
+      PRIMARY: '/hero-banner.mp4',
+      SECONDARY: 'https://www.w3schools.com/html/mov_bbb.mp4', // Verified working link from user test
+      FALLBACK: 'https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4'
     }
   },
   ICONS: {
     CHATBOT: {
-      PRIMARY: chatbotIcon,
-      SECONDARY: '/chatbot-icon.png',
-      FALLBACK: 'https://api.iconify.design/lucide:bot.svg?color=%230066cc'
+      PRIMARY: '/chatbot-icon.png',
+      SECONDARY: 'https://api.iconify.design/lucide:bot.svg?color=%230066cc',
+      FALLBACK: 'https://raw.githubusercontent.com/sigma-next/assets/main/chatbot.png'
     }
   }
 };
