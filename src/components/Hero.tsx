@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section id="home" className="relative min-h-screen w-full overflow-hidden flex items-center justify-center bg-slate-900 pt-24 md:pt-0">
       {/* Video Background */}
-      <div className="absolute inset-0 z-0 h-full w-full bg-[#0a1128]">
+      <div id="hero-video-container" className="absolute inset-0 z-0 h-full w-full bg-[#0a1128]">
         <video
           autoPlay
           loop
@@ -15,23 +15,44 @@ export function Hero() {
           playsInline
           preload="auto"
           className="w-full h-full object-cover brightness-75 contrast-125 select-none"
-          onCanPlay={(e) => {
-            console.log("Video can play");
-            (e.currentTarget.parentElement as HTMLElement).style.background = 'transparent';
+          onCanPlay={() => {
+            console.log("Hero background video is active");
           }}
           onError={(e) => {
-            console.error("Video element error", e);
-            (e.currentTarget.parentElement as HTMLElement).style.background = '#0a1128';
+            const video = e.currentTarget;
+            console.error("Video element global error - checking alternate sources");
+            // If the video somehow fails to start even with multiple sources, try manually setting to local backup
+            if (video.networkState === video.NETWORK_NO_SOURCE) {
+               console.warn("No sources resolved, forcing fallback background");
+               const container = document.getElementById("hero-video-container");
+               if (container) container.style.background = '#0a1128';
+            }
           }}
         >
+          {/* Attempt 1: Your uploaded banner video (Primary source) */}
           <source
             src={ASSETS.VECTORS.HERO_VIDEO.PRIMARY}
             type="video/mp4"
+            onError={() => console.warn("Primary local source failed - trying Pexels fallback")}
           />
+          {/* Attempt 2: Requested Pexels AI Animation (Reliable cloud backup) */}
+          <source
+            src={ASSETS.VECTORS.HERO_VIDEO.SECONDARY}
+            type="video/mp4"
+            onError={() => console.warn("Pexels fallback failed - trying alternate local backup")}
+          />
+          {/* Attempt 3: Legacy local source (Fallback link) */}
+          <source
+            src={ASSETS.VECTORS.HERO_VIDEO.BACKUP_LOCAL}
+            type="video/mp4"
+            onError={() => console.warn("Legacy backup failed - trying cloud backup")}
+          />
+          {/* Attempt 4: High-quality Tech Abstract (Cloud backup) */}
           <source
             src="https://cdn.pixabay.com/video/2016/09/21/5361-183768853_tiny.mp4"
             type="video/mp4"
           />
+          {/* Attempt 4: The Guaranteed "Bunny" Reference (Network check) */}
           <source
             src={ASSETS.VECTORS.HERO_VIDEO.FALLBACK}
             type="video/mp4"
