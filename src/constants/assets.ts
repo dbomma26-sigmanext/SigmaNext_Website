@@ -11,7 +11,7 @@ export const ASSETS = {
   LOGO: {
     PRIMARY: logoPng,
     SECONDARY: '/sigma-logo.png',
-    EXTERNAL: 'https://raw.githubusercontent.com/sigma-next/assets/main/logo.png', // Placeholder for a real repo if exists
+    EXTERNAL: 'https://img.logoipsum.com/296.svg', // Stable professional placeholder
     FALLBACK_TEXT: 'SIGMA'
   },
   TEST: {
@@ -22,14 +22,14 @@ export const ASSETS = {
     HERO_VIDEO: {
       PRIMARY: heroBannerMp4,
       SECONDARY: '/hero-banner.mp4',
-      FALLBACK: 'https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4' 
+      FALLBACK: 'https://www.w3schools.com/html/mov_bbb.mp4' // Use the one that worked in user's test as fallback
     }
   },
   ICONS: {
     CHATBOT: {
       PRIMARY: chatbotIcon,
       SECONDARY: '/chatbot-icon.png',
-      FALLBACK: 'https://api.iconify.design/lucide:bot.svg?color=%23ffffff'
+      FALLBACK: 'https://api.iconify.design/lucide:bot.svg?color=%230066cc'
     }
   }
 };

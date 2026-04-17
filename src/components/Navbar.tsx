@@ -44,7 +44,6 @@ export function Navbar() {
           <img 
             src={ASSETS.LOGO.PRIMARY} 
             alt="SigmaNext Logo" 
-            referrerPolicy="no-referrer"
             className={cn(
               "w-auto object-contain transition-all duration-500 group-hover:scale-105 logo-main-img",
               isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"

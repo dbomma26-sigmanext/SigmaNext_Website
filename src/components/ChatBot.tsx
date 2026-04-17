@@ -67,7 +67,6 @@ export function ChatBot() {
                   <img 
                     src={ASSETS.ICONS.CHATBOT.PRIMARY} 
                     alt="SigmaNext AI" 
-                    referrerPolicy="no-referrer"
                     className="w-full h-full object-contain scale-110 relative z-10"
                     onError={(e) => {
                       const img = e.currentTarget;
@@ -182,7 +181,6 @@ export function ChatBot() {
               <img 
                 src={ASSETS.ICONS.CHATBOT.PRIMARY} 
                 alt="Chat Icon" 
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-contain scale-150 absolute inset-0 z-10"
                 onError={(e) => {
                   const img = e.currentTarget;
