@@ -16,12 +16,13 @@ export function Hero() {
           className="w-full h-full object-cover brightness-75 contrast-125 transition-opacity duration-1000"
           referrerPolicy="no-referrer"
         >
+          {/* Using a reliable external link first to verify the player works */}
           <source
-            src="/Vedio1_Banner.mp4"
+            src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
             type="video/mp4"
           />
           <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-blue-circuit-board-4430-large.mp4"
+            src="/Vedio1_Banner.mp4"
             type="video/mp4"
           />
         </video>
