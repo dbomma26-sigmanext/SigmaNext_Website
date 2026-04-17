@@ -29,11 +29,22 @@ export function MediaDebugSection() {
                 src={ASSETS.VECTORS.HERO_VIDEO.PRIMARY}
                 autoPlay loop muted playsInline
                 className="w-full h-full object-cover"
-                onPlay={() => console.log("New video playing")}
-                onError={() => console.error("New video failed")}
+                onPlay={(e) => {
+                  console.log("New video playing");
+                  const overlay = e.currentTarget.parentElement?.querySelector('.video-status-overlay') as HTMLElement;
+                  if (overlay) overlay.style.display = 'none';
+                }}
+                onError={(e) => {
+                  console.error("New video failed", e);
+                  const overlay = e.currentTarget.parentElement?.querySelector('.video-status-overlay') as HTMLElement;
+                  if (overlay) overlay.innerHTML = '<p class="text-red-500 font-bold">Failed to resolve /hero.mp4</p>';
+                }}
               />
+              <div className="video-status-overlay absolute inset-0 flex items-center justify-center bg-slate-900/40">
+                <p className="text-white/50 text-xs">Waiting for stream...</p>
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex items-end p-6">
-                <p className="text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity">File: Updated_Banner_vedio_2.mp4</p>
+                <p className="text-white text-sm font-bold opacity-100 transition-opacity">File: /hero.mp4</p>
               </div>
             </div>
             
