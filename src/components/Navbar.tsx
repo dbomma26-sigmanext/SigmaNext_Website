@@ -41,37 +41,39 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 group max-w-[140px] md:max-w-none">
-          <div className="relative">
-            <img 
-              src={ASSETS.LOGO.PRIMARY} 
-              alt="SigmaNext Logo" 
-              referrerPolicy="no-referrer"
-              className={cn(
-                "w-auto object-contain transition-all duration-500 group-hover:scale-105",
-                isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
-              )}
-              onLoad={(e) => {
-                console.log("Logo loaded successfully");
-                (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'none';
-              }}
-              onError={(e) => {
-                const img = e.currentTarget;
-                if (!img.dataset.triedSecondary) {
-                  img.dataset.triedSecondary = "true";
-                  img.src = ASSETS.LOGO.SECONDARY;
-                } else if (!img.dataset.triedExternal) {
-                  img.dataset.triedExternal = "true";
-                  img.src = ASSETS.LOGO.EXTERNAL;
-                } else {
-                  console.log("All logo images failed, showing text fallback");
-                  img.style.display = 'none';
-                  const textLogo = img.parentElement?.nextElementSibling as HTMLElement;
-                  if (textLogo) textLogo.style.display = 'flex';
+          <img 
+            src={ASSETS.LOGO.PRIMARY} 
+            alt="SigmaNext Logo" 
+            referrerPolicy="no-referrer"
+            className={cn(
+              "w-auto object-contain transition-all duration-500 group-hover:scale-105 logo-main-img",
+              isScrolled ? "h-7 md:h-12" : "h-10 md:h-20"
+            )}
+            onLoad={(e) => {
+              console.log("Logo loaded successfully");
+              const textFallback = e.currentTarget.parentElement?.querySelector('.logo-text-fallback') as HTMLElement;
+              if (textFallback) textFallback.style.display = 'none';
+            }}
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (!img.dataset.triedSecondary) {
+                img.dataset.triedSecondary = "true";
+                img.src = ASSETS.LOGO.SECONDARY;
+              } else if (!img.dataset.triedExternal) {
+                img.dataset.triedExternal = "true";
+                img.src = ASSETS.LOGO.EXTERNAL;
+              } else {
+                console.log("All logo images failed, showing text fallback");
+                img.style.display = 'none';
+                const textFallback = img.parentElement?.querySelector('.logo-text-fallback') as HTMLElement;
+                if (textFallback) {
+                  textFallback.classList.remove('hidden');
+                  textFallback.style.display = 'flex';
                 }
-              }}
-            />
-          </div>
-          <div className="hidden items-center gap-2">
+              }
+            }}
+          />
+          <div className="logo-text-fallback hidden items-center gap-2">
             <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">Σ</span>
             </div>

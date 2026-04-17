@@ -12,6 +12,10 @@ export const ASSETS = {
     EXTERNAL: 'https://cdn.jsdelivr.net/gh/phuoc-ng/sigma-assets@main/sigma-logo.png', // Just in case, a generic fallback
     FALLBACK_TEXT: 'SIGMA'
   },
+  TEST: {
+    IMAGE: 'https://picsum.photos/seed/sigma/800/600',
+    VIDEO: 'https://www.w3schools.com/html/mov_bbb.mp4'
+  },
   VECTORS: {
     HERO_VIDEO: {
       PRIMARY: '/src/assets/hero-banner.mp4',
