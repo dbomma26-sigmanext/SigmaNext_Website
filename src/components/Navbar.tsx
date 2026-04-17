@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import primaryLogo from "@/assets/sigma-logo.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -41,7 +42,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 group max-w-[140px] md:max-w-none">
           <img 
-            src="/sigma-logo.png?v=2026" 
+            src={primaryLogo} 
             alt="SigmaNext Logo" 
             className={cn(
               "w-auto object-contain transition-all duration-500 group-hover:scale-105",
@@ -50,12 +51,10 @@ export function Navbar() {
             onLoad={() => console.log("Logo loaded successfully")}
             onError={(e) => {
               const img = e.currentTarget;
-              if (img.src.includes('sigma-logo.png')) {
-                console.log("Primary logo failed, trying secondary logo.png");
-                img.src = '/logo.png?v=2026';
-              } else if (img.src.includes('logo.png')) {
-                console.log("Secondary logo failed, trying logo1.png");
-                img.src = '/logo1.png?v=2026';
+              // If bundling fails or hash mismatch, try the static root once
+              if (!img.dataset.triedPublic) {
+                img.dataset.triedPublic = "true";
+                img.src = "/sigma-logo.png";
               } else {
                 console.log("All logo images failed, showing text fallback");
                 img.style.display = 'none';

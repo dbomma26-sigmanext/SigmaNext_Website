@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
+import heroVideo from "@/assets/hero-banner.mp4";
 
 export function Hero() {
   return (
@@ -24,7 +25,11 @@ export function Hero() {
           }}
         >
           <source
-            src="/hero-banner.mp4?v=2026"
+            src={heroVideo}
+            type="video/mp4"
+          />
+          <source
+            src="/hero-banner.mp4"
             type="video/mp4"
           />
           <source
