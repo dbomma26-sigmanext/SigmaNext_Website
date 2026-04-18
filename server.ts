@@ -23,6 +23,54 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Googlebot Special Handler (Security Bypass for Crawlers)
+  // Only serve minimal HTML if we detect a bot, otherwise let Vite handle it
+  app.get("/", async (req, res, next) => {
+    const userAgent = req.headers["user-agent"] || "";
+    if (userAgent.toLowerCase().includes("googlebot") || userAgent.toLowerCase().includes("google-site-verification")) {
+      return res.status(200).send(`
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="google-site-verification" content="Ps_g8jHlR9vYoib7c9gCuEVXoYobpK9OqoamqTageMI" />
+    <title>SigmaNext | Your Partner In Intelligent Transformation</title>
+</head>
+<body><div id="root"></div></body>
+</html>
+      `);
+    }
+    next();
+  });
+
+  app.head("/", (req, res) => {
+    res.setHeader("X-Google-Site-Verification", "Ps_g8jHlR9vYoib7c9gCuEVXoYobpK9OqoamqTageMI");
+    res.status(200).end();
+  });
+
+  // Global SEO Headers
+  app.use((req, res, next) => {
+    res.setHeader("X-Robots-Tag", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+    next();
+  });
+
+  // Google Verification Route
+  app.get("/googlePs_g8jHlR9vYoib7c9gCuEVXoYobpK9OqoamqTageMI.html", (req, res) => {
+    res.setHeader("Content-Type", "text/html");
+    res.send("google-site-verification: googlePs_g8jHlR9vYoib7c9gCuEVXoYobpK9OqoamqTageMI.html");
+  });
+
+  // Sitemap & Robots Handler (Explicit Content Types for Search Console)
+  app.get("/sitemap.xml", (req, res) => {
+    res.header("Content-Type", "application/xml");
+    res.sendFile(path.join(__dirname, "public", "sitemap.xml"));
+  });
+
+  app.get("/robots.txt", (req, res) => {
+    res.header("Content-Type", "text/plain");
+    res.sendFile(path.join(__dirname, "public", "robots.txt"));
+  });
+
   // API Routes
   app.post("/api/careers", upload.single("resume"), async (req, res) => {
     try {
