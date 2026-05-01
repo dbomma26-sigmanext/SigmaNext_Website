@@ -1,5 +1,4 @@
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
 import multer from "multer";
@@ -17,7 +16,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // Multer setup for file uploads
   const upload = multer({
@@ -30,8 +29,10 @@ async function startServer() {
 
   // Debug Logger - Log everything
   app.use((req, res, next) => {
-    console.log(`[DEBUG] ${new Date().toISOString()} - ${req.method} ${req.url}`);
-    console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+    console.log(`[SERVER] ${new Date().toISOString()} - ${req.method} ${req.url}`);
+    if (req.url.startsWith('/api')) {
+      console.log(`[API-TRACE] Hit API route: ${req.method} ${req.url}`);
+    }
     next();
   });
 
@@ -248,6 +249,7 @@ async function startServer() {
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -270,9 +272,14 @@ async function startServer() {
     });
   });
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-  });
+  if (!process.env.VERCEL) {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  }
+
+  return app;
 }
 
-startServer();
+const appPromise = startServer();
+export default appPromise;
