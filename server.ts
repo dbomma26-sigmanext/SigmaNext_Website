@@ -25,6 +25,10 @@ async function startServer() {
 
   // Email Transporter Helper
   const getTransporter = () => {
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+      throw new Error("SMTP credentials are not configured. Please set SMTP_USER and SMTP_PASS in your environment settings.");
+    }
+
     return nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.hostinger.com",
       port: parseInt(process.env.SMTP_PORT || "465"),
@@ -33,6 +37,9 @@ async function startServer() {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      // Increase timeout for slow SMTP servers
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
     });
   };
 
@@ -90,10 +97,10 @@ async function startServer() {
       const { fullName, email, position, coverLetter } = req.body;
       const file = req.file;
 
-      console.log(`Received application from ${fullName} for ${position}`);
+      console.log(`Processing application: ${fullName} -> hr@sigmanext.ai`);
 
       const mailOptions = {
-        from: `"SigmaNext Careers" <${process.env.SMTP_USER || "careers@sigmanext.ai"}>`,
+        from: `"SigmaNext Careers" <${process.env.SMTP_USER}>`,
         to: "hr@sigmanext.ai",
         subject: `New Career Application: ${position} - ${fullName}`,
         text: `
@@ -114,27 +121,25 @@ async function startServer() {
         ] : [],
       };
 
-      if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-        await getTransporter().sendMail(mailOptions);
-        console.log(`Email sent successfully to hr@sigmanext.ai from ${fullName}`);
-      } else {
-        console.warn("SMTP credentials not configured. Email NOT sent.");
-      }
+      await getTransporter().sendMail(mailOptions);
+      console.log(`Application from ${fullName} mailed successfully!`);
       
-      res.status(200).json({ message: "Application submitted successfully" });
+      res.status(200).json({ message: "Thank you! Your application has been submitted successfully to our HR team." });
     } catch (error) {
-      console.error("Error processing application:", error);
-      res.status(500).json({ error: "Failed to submit application" });
+      console.error("Career Submission Error:", error);
+      res.status(500).json({ 
+        error: error instanceof Error ? error.message : "Failed to submit application. Please try again later." 
+      });
     }
   });
 
   app.post("/api/contact", async (req, res) => {
     try {
       const { firstName, lastName, email, message } = req.body;
-      console.log(`Received contact message from ${firstName} ${lastName}`);
+      console.log(`Processing contact message: ${firstName} ${lastName} -> contact@sigmanext.ai`);
       
       const mailOptions = {
-        from: `"SigmaNext Contact" <${process.env.SMTP_USER || "contact@sigmanext.ai"}>`,
+        from: `"SigmaNext Contact" <${process.env.SMTP_USER}>`,
         to: "contact@sigmanext.ai",
         subject: `New Contact Message from ${firstName} ${lastName}`,
         text: `
@@ -148,15 +153,15 @@ async function startServer() {
         `,
       };
 
-      if (process.env.SMTP_USER && process.env.SMTP_PASS) {
-        await getTransporter().sendMail(mailOptions);
-        console.log(`Contact email sent successfully to contact@sigmanext.ai`);
-      }
+      await getTransporter().sendMail(mailOptions);
+      console.log(`Contact message from ${firstName} mailed successfully!`);
       
-      res.status(200).json({ message: "Message sent successfully" });
+      res.status(200).json({ message: "Your message has been sent successfully. We will get back to you shortly." });
     } catch (error) {
-      console.error("Error processing contact message:", error);
-      res.status(500).json({ error: "Failed to send message" });
+      console.error("Contact Form Error:", error);
+      res.status(500).json({ 
+        error: error instanceof Error ? error.message : "Failed to send message. Please try again later." 
+      });
     }
   });
 

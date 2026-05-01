@@ -7,9 +7,14 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
     const formData = new FormData(e.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
 
@@ -20,12 +25,18 @@ export function Contact() {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error("Failed to send message");
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to send message. Please try again.");
+      }
 
       setIsSubmitted(true);
-      setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error) {
-      console.error("Contact form error:", error);
+    } catch (err) {
+      console.error("Contact form error:", err);
+      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,9 +124,19 @@ export function Contact() {
                     <Textarea required name="message" placeholder="Tell us about your project..." className="rounded-xl min-h-[100px] md:min-h-[120px] resize-none bg-slate-50/50 border-slate-100 focus:bg-white transition-all p-4 text-sm" />
                   </div>
 
-                  <div className="flex justify-center">
-                    <Button type="submit" size="lg" className="rounded-full px-12 h-14 text-sm font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 group shadow-lg shadow-black/5">
-                      Send Message
+                  <div className="flex flex-col items-center gap-4">
+                    {error && (
+                      <p className="text-red-500 text-[10px] font-bold text-center bg-red-50 p-2 rounded-lg w-full border border-red-100">
+                        {error}
+                      </p>
+                    )}
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      disabled={isSubmitting}
+                      className="rounded-full px-12 h-14 text-sm font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 group shadow-lg shadow-black/5 disabled:opacity-50"
+                    >
+                      {isSubmitting ? "Sending..." : "Send Message"}
                       <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </Button>
                   </div>

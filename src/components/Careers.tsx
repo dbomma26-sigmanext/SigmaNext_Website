@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function Careers() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -36,8 +38,9 @@ export function Careers() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
     
-    // Simulate API call
     const formData = new FormData(e.target as HTMLFormElement);
     if (file) {
       formData.append("resume", file);
@@ -49,13 +52,20 @@ export function Careers() {
         body: formData 
       });
       
-      if (!response.ok) throw new Error("Submission failed");
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || "Submission failed. Please check your connection and try again.");
+      }
       
       setIsSubmitted(true);
       setFile(null);
-      setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error) {
-      console.error("Submission failed", error);
+      // Don't auto-reset success state too soon so user can see it
+    } catch (err) {
+      console.error("Submission failed", err);
+      setError(err instanceof Error ? err.message : "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -198,9 +208,19 @@ export function Careers() {
                     </div>
                   </div>
 
-                  <div className="flex justify-center">
-                    <Button type="submit" size="lg" className="rounded-full px-12 h-14 text-sm font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 group shadow-lg shadow-black/5">
-                      Submit Application
+                  <div className="flex flex-col items-center gap-4">
+                    {error && (
+                      <p className="text-red-500 text-[10px] font-bold text-center bg-red-50 p-2 rounded-lg w-full border border-red-100">
+                        {error}
+                      </p>
+                    )}
+                    <Button 
+                      type="submit" 
+                      size="lg" 
+                      disabled={isSubmitting}
+                      className="rounded-full px-12 h-14 text-sm font-bold bg-gradient-to-b from-white via-slate-100 to-slate-200 text-slate-900 border border-slate-200 hover:from-white hover:to-slate-100 transition-all duration-300 group shadow-lg shadow-black/5 disabled:opacity-50"
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit Application"}
                       <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </Button>
                   </div>
