@@ -25,7 +25,16 @@ export function Contact() {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      const contentType = response.headers.get("content-type");
+      let result;
+      
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("Unexpected response from server:", text);
+        throw new Error("Server returned an unexpected response. Please try again later.");
+      }
 
       if (!response.ok) {
         throw new Error(result.error || "Failed to send message. Please try again.");

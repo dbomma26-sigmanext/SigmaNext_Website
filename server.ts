@@ -22,6 +22,13 @@ async function startServer() {
   });
 
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  // Debug Logger
+  app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+  });
 
   // Email Transporter Helper
   const getTransporter = () => {
@@ -34,8 +41,8 @@ async function startServer() {
       port: parseInt(process.env.SMTP_PORT || "465"),
       secure: process.env.SMTP_SECURE !== "false",
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER || "hr@sigmanext.ai",
+        pass: process.env.SMTP_PASS || "Welcome26@4",
       },
       // Increase timeout for slow SMTP servers
       connectionTimeout: 10000,
@@ -91,16 +98,34 @@ async function startServer() {
     res.sendFile(path.join(__dirname, "public", "robots.txt"));
   });
 
+  // Health check
+  app.get("/api/health", (req, res) => {
+    res.json({ status: "ok", time: new Date().toISOString() });
+  });
+
   // API Routes
-  app.post("/api/careers", upload.single("resume"), async (req, res) => {
+  app.post("/api/careers", (req, res, next) => {
+    upload.single("resume")(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: `Upload error: ${err.message}` });
+      } else if (err) {
+        return res.status(500).json({ error: `Unknown upload error: ${err.message}` });
+      }
+      next();
+    });
+  }, async (req, res) => {
     try {
       const { fullName, email, position, coverLetter } = req.body;
       const file = req.file;
 
+      if (!fullName || !email || !position) {
+        return res.status(400).json({ error: "Please provide all required fields (Name, Email, Position)." });
+      }
+
       console.log(`Processing application: ${fullName} -> hr@sigmanext.ai`);
 
       const mailOptions = {
-        from: `"SigmaNext Careers" <${process.env.SMTP_USER}>`,
+        from: `"SigmaNext Careers" <${process.env.SMTP_USER || "hr@sigmanext.ai"}>`,
         to: "hr@sigmanext.ai",
         subject: `New Career Application: ${position} - ${fullName}`,
         text: `
@@ -165,6 +190,11 @@ async function startServer() {
     }
   });
 
+  // API 404 handler - Catch missed API routes BEFORE Vite middleware
+  app.all("/api/*", (req, res) => {
+    res.status(404).json({ error: `API route ${req.method} ${req.url} not found` });
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -179,6 +209,15 @@ async function startServer() {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
+
+  // Global Error Handler to ensure JSON responses for any unexpected server errors
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    console.error("Unhandled Global Error:", err);
+    res.status(err.status || 500).json({
+      error: err.message || "An unexpected server error occurred.",
+      details: process.env.NODE_ENV !== 'production' ? err.stack : undefined
+    });
+  });
 
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
