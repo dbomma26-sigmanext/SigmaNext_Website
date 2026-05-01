@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Play } from "lucide-react";
 import { ASSETS } from "@/constants/assets";
+import { SparkleBrand } from "./SparkleBrand";
 
 export function Hero() {
   const scrollToServices = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -83,10 +84,31 @@ export function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 md:mb-10 leading-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
-            Let's grow business <span className="text-sigma-blue underline decoration-sigma-blue/50 underline-offset-[8px]">together.</span>
+            Let's{" "}
+            <span className="relative inline-block">
+              <span className="text-sigma-yellow underline decoration-sigma-yellow/50 underline-offset-[8px]">grow</span>
+              {/* Shine overlay */}
+              <span className="absolute inset-0 animate-text-shine pointer-events-none select-none" aria-hidden="true">grow</span>
+              {/* Sparkles */}
+              <motion.span 
+                animate={{ scale: [0, 1, 0], rotate: [0, 90, 180], opacity: [0, 1, 0] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
+                className="absolute -top-4 -right-4 text-sigma-yellow"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5 9.5 2.5-9.5 2.5-2.5 9.5-2.5-9.5-9.5-2.5 9.5-2.5z"/></svg>
+              </motion.span>
+              <motion.span 
+                animate={{ scale: [0, 1, 0], rotate: [0, -90, -180], opacity: [0, 1, 0] }}
+                transition={{ duration: 2.5, repeat: Infinity, delay: 1.2 }}
+                className="absolute -bottom-2 -left-4 text-sigma-yellow"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0l2.5 9.5 9.5 2.5-9.5 2.5-2.5 9.5-2.5-9.5-9.5-2.5 9.5-2.5z"/></svg>
+              </motion.span>
+            </span>{" "}
+            business together.
           </h1>
           <p className="text-sm sm:text-base md:text-xl text-white/90 max-w-3xl mx-auto mb-6 md:mb-12 leading-relaxed font-bold drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
-            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is your best-in-class partner for elite application management, data analytics, and trustable cyber security solutions.
+            <SparkleBrand withSparkles /> is your best-in-class partner for elite application management, data analytics, java, data engineering, quality management, it consultancy, mobile apps, and data science.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#services" onClick={scrollToServices}>

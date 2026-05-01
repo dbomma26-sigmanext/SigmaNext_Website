@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+import { COUNTRY_CODES } from "@/constants/countries";
+
+import { SparkleBrand } from "./SparkleBrand";
+
 export function Contact() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,7 +19,14 @@ export function Contact() {
     setIsSubmitting(true);
     setError(null);
 
-    const formData = new FormData(e.target as HTMLFormElement);
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Combine country code and phone number
+    const countryCode = formData.get("countryCode");
+    const phoneNumber = formData.get("phone");
+    formData.set("phone", `${countryCode} ${phoneNumber}`);
+    
     const data = Object.fromEntries(formData.entries());
 
     try {
@@ -65,7 +76,7 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-slate-900 leading-tight">Let's Build Something Great Together</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-slate-900 leading-tight">Let's Build Something Great Together with <SparkleBrand withSparkles /></h2>
             <p className="text-base md:text-lg text-slate-500 mb-8 leading-relaxed font-medium">
               Ready to take your business to the next level? Contact us today for a free consultation.
             </p>
@@ -137,7 +148,26 @@ export function Contact() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold text-slate-700 ml-1 uppercase tracking-wider">Phone Number</label>
-                      <Input required name="phone" type="tel" placeholder="+1-xxx-xxx-xxxx" className="rounded-xl h-12 bg-slate-50/50 border-slate-100 focus:bg-white transition-all" />
+                      <div className="flex gap-2">
+                        <select 
+                          name="countryCode" 
+                          required 
+                          className="w-[100px] rounded-xl h-12 bg-slate-50/50 border border-slate-100 focus:bg-white transition-all text-xs font-bold px-2 outline-none appearance-none"
+                        >
+                          {COUNTRY_CODES.map((c, i) => (
+                            <option key={i} value={c.code}>{c.label}</option>
+                          ))}
+                        </select>
+                        <Input 
+                          required 
+                          name="phone" 
+                          type="tel" 
+                          pattern="[0-9]{10}"
+                          title="Please enter exactly 10 numerical digits"
+                          placeholder="xxxxxxxxxx" 
+                          className="flex-1 rounded-xl h-12 bg-slate-50/50 border-slate-100 focus:bg-white transition-all" 
+                        />
+                      </div>
                     </div>
                   </div>
 

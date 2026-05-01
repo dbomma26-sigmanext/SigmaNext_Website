@@ -1,24 +1,25 @@
 import { motion } from "motion/react";
 import { CheckCircle2, Users, Target, Layers, ShieldCheck } from "lucide-react";
+import { SparkleBrand } from "./SparkleBrand";
 
 const features = [
   {
     title: "Highly Skilled Talent",
-    description: "A team of engineers, data specialists, and cybersecurity experts who operate with precision, accountability, and a commitment to excellence.",
+    description: "A team of engineers, data specialists, and full-stack software experts who operate with precision, accountability, and a commitment to excellence.",
     icon: Users,
     color: "text-sigma-blue",
     bg: "bg-sigma-blue/10"
   },
   {
     title: "Results-Originated Solutions",
-    description: "Every engagement begins with outcomes in mind — engineered to be scalable, secure, and aligned with your business goals.",
+    description: "Every engagement begins with outcomes in mind — engineered to be scalable, efficient, and aligned with your business goals.",
     icon: Target,
     color: "text-sigma-blue",
     bg: "bg-sigma-blue/10"
   },
   {
     title: "End-to-End Expertise",
-    description: "From Application Management to Data Engineering, Data Science, Cybersecurity, and AI-Led Engineering, we deliver integrated solutions that drive real transformation.",
+    description: "From Application Management to Data Engineering, Data Science, Java Development, and IT Consultancy, we deliver integrated solutions that drive real transformation.",
     icon: Layers,
     color: "text-sigma-blue",
     bg: "bg-sigma-blue/10"
@@ -44,15 +45,15 @@ export function WhyChooseUs() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-slate-900 leading-tight">
-              Why Choose <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span>
+              Why Choose <SparkleBrand withSparkles />
             </h2>
             <p className="text-base md:text-lg text-slate-600 mb-6 leading-relaxed font-medium">
-              At <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span>, we bring together precision engineering, deep technical expertise, and a results-driven mindset to help enterprises accelerate intelligent transformation.
+              At <SparkleBrand />, we bring together precision engineering, deep technical expertise, and a results-driven mindset to help enterprises accelerate intelligent transformation.
             </p>
             
             <div className="bg-white p-6 md:p-8 rounded-3xl border border-slate-100 shadow-xl shadow-slate-200/50 mb-6">
               <p className="text-lg md:text-xl font-bold text-slate-900 italic leading-relaxed">
-                "<span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is more than a technology partner — we are your catalyst for intelligent, future-ready growth."
+                "<SparkleBrand /> is more than a technology partner — we are your catalyst for intelligent, future-ready growth."
               </p>
             </div>
 

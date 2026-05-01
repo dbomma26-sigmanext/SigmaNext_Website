@@ -18,7 +18,14 @@ import { ChatBot } from "@/components/ChatBot";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+    <div className="min-h-screen bg-background text-foreground selection:bg-sigma-blue/30 relative overflow-x-hidden">
+      {/* Happy background blobs */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="bg-happy-blob w-[500px] h-[500px] bg-sigma-blue/5 top-[-10%] -left-64" />
+        <div className="bg-happy-blob w-[400px] h-[400px] bg-sigma-yellow/5 bottom-[-10%] -right-32 delay-1000" />
+        <div className="bg-happy-blob w-[300px] h-[300px] bg-sigma-blue/5 top-[40%] right-[-100px]" />
+      </div>
+      
       <Navbar />
       <main className="w-full">
         <section className="w-full min-h-screen overflow-visible">

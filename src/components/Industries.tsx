@@ -30,7 +30,7 @@ const industries = [
     description: "Streamlining claims, underwriting, and customer engagement with data-driven solutions.",
     icon: ShieldCheck,
     image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
-    fullContent: "Our insurance solutions leverage modern data architecture to automate claims processing. We design scalable ETL workflows to integrate disparate data sources into unified datawarehouses. Our focus includes data quality governance, predictive modeling for underwriting, and comprehensive reporting dashboards for operational visibility and security."
+    fullContent: "Our insurance solutions leverage modern data architecture to automate claims processing. We design scalable ETL workflows to integrate disparate data sources into unified datawarehouses. Our focus includes data quality governance, predictive modeling for underwriting, and comprehensive reporting dashboards for operational visibility and risk management."
   },
   {
     id: "healthcare",
@@ -54,7 +54,7 @@ const industries = [
     description: "Enhancing guest experiences and operational efficiency for hotels and travel services.",
     icon: Hotel,
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
-    fullContent: "Our hospitality data architecture focuses on guest 360-degree views. We implement efficient ETL processes for booking and loyalty data, ensuring strong data governance and security. Our Datawarehouse solutions enable sophisticated revenue management reporting and analytics to drive personalized guest experiences."
+    fullContent: "Our hospitality data architecture focuses on guest 360-degree views. We implement efficient ETL processes for booking and loyalty data, ensuring strong data governance and reliability. Our Datawarehouse solutions enable sophisticated revenue management reporting and analytics to drive personalized guest experiences."
   },
   {
     id: "retail",

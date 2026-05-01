@@ -7,6 +7,8 @@ import { GoogleGenAI } from "@google/genai";
 import { cn } from "@/lib/utils";
 import { ASSETS } from "@/constants/assets";
 
+import { SparkleBrand } from "./SparkleBrand";
+
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: "user" | "bot"; text: string }[]>([
@@ -36,7 +38,7 @@ export function ChatBot() {
         model: "gemini-3-flash-preview",
         contents: userMessage,
         config: {
-          systemInstruction: "You are a helpful assistant for SigmaNext.ai, a technology consultancy specializing in application management, data analytics, and cyber security. Be professional, concise, and helpful. If asked about contact info, use: Email: Contact@SigmaNext.ai, Phone: +1-469-918-2081, Address: 405 State Highway 121, Suite A250, Lewisville, Texas, USA, 75067.",
+          systemInstruction: "You are a helpful assistant for SigmaNext.ai, a technology consultancy specializing in application management, data analytics, java, data engineering, quality management, it consultancy, mobile apps, and data science. Be professional, concise, and helpful. If asked about contact info, use: Email: Contact@SigmaNext.ai, Phone: +1-469-918-2081, Address: 405 State Highway 121, Suite A250, Lewisville, Texas, USA, 75067.",
         },
       });
 
@@ -88,7 +90,9 @@ export function ChatBot() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold">SigmaNext AI</h3>
+                  <h3 className="font-bold leading-none mb-1">
+                    <SparkleBrand className="text-white text-sm" withSparkles />
+                  </h3>
                   <p className="text-[10px] text-white/70 uppercase tracking-widest">Always Online</p>
                 </div>
               </div>

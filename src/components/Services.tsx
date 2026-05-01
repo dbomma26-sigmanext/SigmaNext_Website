@@ -6,7 +6,8 @@ import {
   Settings,
   CheckCircle2,
   Cpu,
-  ArrowUpRight
+  ArrowUpRight,
+  Code
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -36,12 +37,12 @@ const services = [
     image: "https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=800&q=80"
   },
   {
-    title: "Cyber Security",
-    description: "Comprehensive security audits, threat detection, and response strategies to protect your digital assets.",
-    icon: ShieldCheck,
+    title: "Java Development",
+    description: "Expert Java development services building scalable, robust backend systems and enterprise-grade applications.",
+    icon: Code,
     color: "text-sigma-blue",
     bg: "bg-sigma-blue/10",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Quality Management",
@@ -58,6 +59,22 @@ const services = [
     color: "text-sigma-blue",
     bg: "bg-sigma-blue/10",
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    title: "Mobile Apps",
+    description: "Custom mobile application development for iOS and Android, focusing on user experience and performance.",
+    icon: ArrowUpRight,
+    color: "text-sigma-blue",
+    bg: "bg-sigma-blue/10",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    title: "Data Science",
+    description: "Leverage machine learning and predictive modeling to solve complex business problems with data.",
+    icon: BarChart3,
+    color: "text-sigma-blue",
+    bg: "bg-sigma-blue/10",
+    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80"
   },
 ];
 
@@ -93,38 +110,51 @@ export function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="h-full"
             >
-              <Card className="group relative hover:shadow-[0_0_50px_-12px_rgba(0,86,179,0.3)] hover:-translate-y-1 transition-all duration-500 border-slate-100 bg-white overflow-hidden h-full shadow-sm">
-                <div className="relative h-24 md:h-32 overflow-hidden">
+              <Card className="group relative hover:shadow-[0_20px_50px_-12px_rgba(0,86,179,0.2)] transition-all duration-500 border-slate-100 bg-white overflow-hidden h-full shadow-sm rounded-3xl">
+                {/* Decorative sparkles on hover */}
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <motion.div 
+                    animate={{ scale: [0, 1, 0], rotate: 45 }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                    className="text-sigma-yellow"
+                  >
+                    ✨
+                  </motion.div>
+                </div>
+
+                <div className="relative h-28 md:h-36 overflow-hidden">
                   <img 
                     src={service.image} 
                     alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[50%] group-hover:grayscale-0"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0 brightness-95 group-hover:brightness-105"
                     referrerPolicy="no-referrer"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/20 to-transparent" />
+                  <div className="absolute inset-0 bg-sigma-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <CardHeader className="pb-1 relative z-10 -mt-6 md:-mt-8 px-4 md:px-6">
-                  <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg ${service.bg} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500 shadow-lg border border-white/50 backdrop-blur-sm`}>
-                    <service.icon className={`w-4 h-4 md:w-5 md:h-5 ${service.color}`} />
+                <CardHeader className="pb-1 relative z-10 -mt-10 md:-mt-12 px-6">
+                  <div className={`w-12 h-12 rounded-2xl ${service.bg} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500 shadow-xl border-2 border-white backdrop-blur-md`}>
+                    <service.icon className={`w-6 h-6 ${service.color}`} />
                   </div>
-                  <CardTitle className="text-base md:text-lg font-bold text-slate-900 flex items-center justify-between">
+                  <CardTitle className="text-lg md:text-xl font-bold text-slate-900 group-hover:text-sigma-blue transition-colors duration-300 flex items-center justify-between">
                     {service.title}
-                    <ArrowUpRight className="w-3 h-3 md:w-4 md:h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-slate-400" />
+                    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 text-sigma-blue" />
                   </CardTitle>
-                  <CardDescription className="text-xs md:text-sm leading-relaxed pt-1 text-slate-500 font-medium line-clamp-2">
+                  <CardDescription className="text-sm leading-relaxed pt-2 text-slate-500 font-medium line-clamp-3">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="pt-1 px-4 md:px-6 pb-3">
-                  <div className="h-1 w-full bg-slate-50 rounded-full overflow-hidden">
+                <CardContent className="pt-2 px-6 pb-6">
+                  <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: "100%" }}
                       viewport={{ once: true }}
-                      transition={{ duration: 1.5, delay: 0.5 + index * 0.1 }}
-                      className={`h-full ${service.bg.replace('/10', '')} opacity-60`}
+                      transition={{ duration: 2, delay: 0.5 + index * 0.1 }}
+                      className={`h-full bg-gradient-to-r from-sigma-blue to-sigma-yellow opacity-80`}
                     />
                   </div>
                 </CardContent>

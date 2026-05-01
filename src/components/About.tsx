@@ -48,6 +48,8 @@ const pillars = [
   }
 ];
 
+import { SparkleBrand } from "./SparkleBrand";
+
 export function About() {
   return (
     <section id="about" className="h-full w-full py-12 md:py-16 px-6 overflow-hidden bg-white flex flex-col justify-center pt-24 md:pt-0">
@@ -59,7 +61,7 @@ export function About() {
             viewport={{ once: true }}
             className="text-sigma-blue font-bold tracking-[0.2em] uppercase text-[10px] mb-2 block"
           >
-            About <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span>
+            About <SparkleBrand />
           </motion.span>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +78,7 @@ export function About() {
             transition={{ delay: 0.1 }}
             className="text-base md:text-lg text-slate-500 max-w-3xl mx-auto font-medium"
           >
-            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is a premier leading software and technology consultancy dedicated to precision engineering and trustable innovation.
+            <SparkleBrand /> is a premier leading software and technology consultancy dedicated to precision engineering and trustable innovation.
           </motion.p>
         </div>
 

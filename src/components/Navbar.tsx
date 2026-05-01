@@ -4,6 +4,7 @@ import { Menu, X, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ASSETS } from "@/constants/assets";
+import { SparkleBrand } from "./SparkleBrand";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -94,9 +95,8 @@ export function Navbar() {
             <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xl">Σ</span>
             </div>
-            <span className="text-2xl font-black tracking-tighter text-slate-900">
-              <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span><span className="text-slate-400">.ai</span>
-            </span>
+            <SparkleBrand className="text-2xl font-black tracking-tighter" withSparkles />
+            <span className="text-2xl font-black tracking-tighter text-slate-400">.ai</span>
           </div>
         </div>
 

@@ -2,6 +2,7 @@ import { Facebook, Twitter, Linkedin, Instagram, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ASSETS } from "@/constants/assets";
 import { cn } from "@/lib/utils";
+import { SparkleBrand } from "./SparkleBrand";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -13,16 +14,6 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-20">
           <div className="space-y-8">
-            <div className="flex items-center gap-2 group">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">Σ</span>
-                </div>
-                <span className="text-xl font-black tracking-tighter text-slate-900">
-                  <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span>
-                </span>
-              </div>
-            </div>
             <p className="text-slate-500 leading-relaxed font-medium">
               Your Partner In Intelligent Transformation. Empowering businesses with next-gen technology solutions and AI-driven consultancy.
             </p>
@@ -73,7 +64,7 @@ export function Footer() {
 
         <div className="border-t border-slate-100 pt-12 flex flex-col md:flex-row items-center justify-between gap-8">
           <p className="text-slate-400 text-sm font-bold">
-            © <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span>.ai. All rights reserved.
+            © <SparkleBrand />.ai. All rights reserved.
           </p>
           <div className="flex items-center gap-10 text-sm text-slate-400 font-bold">
             <Button
