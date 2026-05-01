@@ -55,7 +55,7 @@ export async function createApp() {
     });
   }, async (req, res) => {
     try {
-      const { fullName, email, position, coverLetter } = req.body;
+      const { fullName, email, phone, position, coverLetter } = req.body;
       const file = req.file;
 
       if (!fullName || !email || !position) return res.status(400).json({ error: "Missing required fields." });
@@ -65,8 +65,24 @@ export async function createApp() {
         from: `"SigmaNext Careers" <${authUser}>`,
         to: "hr@sigmanext.ai",
         replyTo: email,
-        subject: `New Application: ${position} - ${fullName}`,
-        text: `Name: ${fullName}\nEmail: ${email}\nPosition: ${position}\nCover Letter: ${coverLetter || "None"}`,
+        subject: `[Website Career Submission] ${position} - ${fullName}`,
+        text: `
+--------------------------------------------------
+NEW CAREER APPLICATION RECEIVED FROM WEBSITE
+--------------------------------------------------
+
+Candidate Details:
+- Name: ${fullName}
+- Email: ${email}
+- Phone: ${phone || "Not provided"}
+- Position applied for: ${position}
+
+Message / Cover Letter:
+${coverLetter || "No cover letter provided."}
+
+--------------------------------------------------
+This email was automatically generated from the SigmaNext website careers form.
+        `,
         attachments: file ? [{ filename: file.originalname, content: file.buffer }] : [],
       };
 
@@ -81,16 +97,31 @@ export async function createApp() {
   // Contact Form
   app.post("/api/contact", async (req, res) => {
     try {
-      const { firstName, lastName, email, message } = req.body;
+      const { firstName, lastName, email, phone, message } = req.body;
       if (!firstName || !email || !message) return res.status(400).json({ error: "Missing required fields." });
 
       const authUser = process.env.SMTP_USER || "hr@sigmanext.ai";
       const mailOptions = {
-        from: `"SigmaNext Contact" <${authUser}>`,
+        from: `"SigmaNext Website Contact" <${authUser}>`,
         to: "contact@sigmanext.ai",
         replyTo: email,
-        subject: `New Contact Message from ${firstName} ${lastName}`,
-        text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
+        subject: `[Website Contact Form] Message from ${firstName} ${lastName}`,
+        text: `
+--------------------------------------------------
+NEW CONTACT MESSAGE RECEIVED FROM WEBSITE
+--------------------------------------------------
+
+Sender Details:
+- Name: ${firstName} ${lastName}
+- Email: ${email}
+- Phone: ${phone || "Not provided"}
+
+Message:
+${message}
+
+--------------------------------------------------
+This email was automatically generated from the SigmaNext website contact form.
+        `,
       };
 
       await getTransporter().sendMail(mailOptions);

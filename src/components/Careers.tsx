@@ -176,9 +176,15 @@ export function Careers() {
                     </div>
                   </div>
                   
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-slate-700 ml-1 uppercase tracking-wider">Position Applied For</label>
-                    <Input required name="position" placeholder="e.g. Data Engineer" className="rounded-xl h-12 bg-slate-50/50 border-slate-100 focus:bg-white transition-all" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-700 ml-1 uppercase tracking-wider">Phone Number</label>
+                      <Input required name="phone" type="tel" placeholder="+1-xxx-xxx-xxxx" className="rounded-xl h-12 bg-slate-50/50 border-slate-100 focus:bg-white transition-all" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-700 ml-1 uppercase tracking-wider">Position Applied For</label>
+                      <Input required name="position" placeholder="e.g. Data Engineer" className="rounded-xl h-12 bg-slate-50/50 border-slate-100 focus:bg-white transition-all" />
+                    </div>
                   </div>
 
                   <div className="space-y-2">
