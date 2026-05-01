@@ -33,14 +33,18 @@ export function Contact() {
       } else {
         const text = await response.text();
         console.error(`Unexpected response (${response.status}):`, text);
-        throw new Error(`Server returned an unexpected response (${response.status}). Please try again later.`);
+        if (text.includes("<!DOCTYPE html>") || text.includes("<html")) {
+          throw new Error(`Server route error (${response.status}). The API endpoint might be missing or misconfigured.`);
+        }
+        throw new Error(`Server returned an unexpected response (${response.status}).`);
       }
 
       if (!response.ok) {
-        throw new Error(result.error || "Failed to send message. Please try again.");
+        throw new Error(result.error || result.message || "Failed to send message. Please try again.");
       }
 
       setIsSubmitted(true);
+      setTimeout(() => setIsSubmitted(false), 10000);
     } catch (err) {
       console.error("Contact form error:", err);
       setError(err instanceof Error ? err.message : "An unexpected error occurred.");

@@ -60,16 +60,21 @@ export function Careers() {
       } else {
         const text = await response.text();
         console.error(`Unexpected response (${response.status}):`, text);
-        throw new Error(`Server returned an unexpected response (${response.status}). Please try again later.`);
+        // Handle Vite's default 404 HTML if it happens
+        if (text.includes("<!DOCTYPE html>") || text.includes("<html")) {
+           throw new Error(`Server route error (${response.status}). The API endpoint might be missing or misconfigured.`);
+        }
+        throw new Error(`Server returned an unexpected response (${response.status}).`);
       }
       
       if (!response.ok) {
-        throw new Error(result.error || "Submission failed. Please check your connection and try again.");
+        throw new Error(result.error || result.message || "Submission failed. Please check your connection and try again.");
       }
       
       setIsSubmitted(true);
       setFile(null);
-      // Don't auto-reset success state too soon so user can see it
+      // Auto-reset success state after 10 seconds so they can see it
+      setTimeout(() => setIsSubmitted(false), 10000);
     } catch (err) {
       console.error("Submission failed", err);
       setError(err instanceof Error ? err.message : "An unexpected error occurred. Please try again.");

@@ -104,17 +104,47 @@ async function startServer() {
     res.sendFile(path.join(__dirname, "public", "robots.txt"));
   });
 
-  // Health check
+  // API Routes
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", time: new Date().toISOString() });
   });
 
-  // API Routes
+  // Test route to verify API is reachable
+  app.get("/api/test", (req, res) => {
+    res.json({ message: "API is working", time: new Date().toISOString() });
+  });
+
+  // Test route to send a direct email
+  app.get("/api/test-email", async (req, res) => {
+    try {
+      console.log("[API] Manual trigger: Sending test email...");
+      const mailOptions = {
+        from: `"SigmaNext Test" <${process.env.SMTP_USER || "hr@sigmanext.ai"}>`,
+        to: "hr@sigmanext.ai",
+        subject: "Direct SMTP Test - SigmaNext",
+        text: "If you are reading this, the SMTP configuration on your SigmaNext website is working correctly!",
+      };
+
+      await getTransporter().sendMail(mailOptions);
+      res.json({ success: true, message: "Test email sent successfully to hr@sigmanext.ai" });
+    } catch (error) {
+      console.error("[API] Test Email Error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: error instanceof Error ? error.message : "Failed to send test email" 
+      });
+    }
+  });
+
+  // Careers Submission
   app.post("/api/careers", (req, res, next) => {
+    console.log("[API] Careers POST received");
     upload.single("resume")(req, res, (err) => {
       if (err instanceof multer.MulterError) {
+        console.error("[API] Multer Error:", err);
         return res.status(400).json({ error: `Upload error: ${err.message}` });
       } else if (err) {
+        console.error("[API] Upload Error:", err);
         return res.status(500).json({ error: `Unknown upload error: ${err.message}` });
       }
       next();
@@ -125,10 +155,10 @@ async function startServer() {
       const file = req.file;
 
       if (!fullName || !email || !position) {
-        return res.status(400).json({ error: "Please provide all required fields (Name, Email, Position)." });
+        return res.status(400).json({ error: "Missing required fields: fullName, email, or position." });
       }
 
-      console.log(`Processing application: ${fullName} -> hr@sigmanext.ai`);
+      console.log(`[API] Processing application for ${fullName} (${position})`);
 
       const mailOptions = {
         from: `"SigmaNext Careers" <${process.env.SMTP_USER || "hr@sigmanext.ai"}>`,
@@ -153,24 +183,32 @@ async function startServer() {
       };
 
       await getTransporter().sendMail(mailOptions);
-      console.log(`Application from ${fullName} mailed successfully!`);
+      console.log(`[API] Application from ${fullName} mailed to hr@sigmanext.ai`);
       
-      res.status(200).json({ message: "Thank you! Your application has been submitted successfully to our HR team." });
+      res.status(200).json({ 
+        success: true,
+        message: "Thank you! Your application has been submitted successfully to our HR team." 
+      });
     } catch (error) {
-      console.error("Career Submission Error:", error);
+      console.error("[API] Career Submission Error:", error);
       res.status(500).json({ 
         error: error instanceof Error ? error.message : "Failed to submit application. Please try again later." 
       });
     }
   });
 
+  // Contact Form
   app.post("/api/contact", async (req, res) => {
     try {
       const { firstName, lastName, email, message } = req.body;
-      console.log(`Processing contact message: ${firstName} ${lastName} -> contact@sigmanext.ai`);
+      console.log(`[API] Processing contact message from ${firstName} ${lastName}`);
       
+      if (!firstName || !email || !message) {
+        return res.status(400).json({ error: "Missing required fields: firstName, email, or message." });
+      }
+
       const mailOptions = {
-        from: `"SigmaNext Contact" <${process.env.SMTP_USER}>`,
+        from: `"SigmaNext Contact" <${process.env.SMTP_USER || "contact@sigmanext.ai"}>`,
         to: "contact@sigmanext.ai",
         subject: `New Contact Message from ${firstName} ${lastName}`,
         text: `
@@ -185,20 +223,27 @@ async function startServer() {
       };
 
       await getTransporter().sendMail(mailOptions);
-      console.log(`Contact message from ${firstName} mailed successfully!`);
+      console.log(`[API] Contact message from ${firstName} mailed to contact@sigmanext.ai`);
       
-      res.status(200).json({ message: "Your message has been sent successfully. We will get back to you shortly." });
+      res.status(200).json({ 
+        success: true,
+        message: "Your message has been sent successfully. We will get back to you shortly." 
+      });
     } catch (error) {
-      console.error("Contact Form Error:", error);
+      console.error("[API] Contact Form Error:", error);
       res.status(500).json({ 
         error: error instanceof Error ? error.message : "Failed to send message. Please try again later." 
       });
     }
   });
 
-  // API 404 handler - Catch missed API routes BEFORE Vite middleware
+  // API 404 handler - Catch missed API routes BEFORE site contents
   app.all("/api/*", (req, res) => {
-    res.status(404).json({ error: `API route ${req.method} ${req.url} not found` });
+    console.warn(`[API] 404 hit for ${req.method} ${req.url}`);
+    res.status(404).json({ 
+      error: "Not Found", 
+      message: `API route ${req.method} ${req.url} does not exist.`
+    });
   });
 
   // Vite middleware for development
