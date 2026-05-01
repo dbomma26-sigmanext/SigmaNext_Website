@@ -67,7 +67,7 @@ export function About() {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-black text-slate-900 mb-4"
           >
-            The Catalyst for <span className="text-sigma-blue">Intelligent</span> Growth
+            The Best-in-class Catalyst for <span className="text-sigma-blue">Intelligent</span> Growth
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ export function About() {
             transition={{ delay: 0.1 }}
             className="text-base md:text-lg text-slate-500 max-w-3xl mx-auto font-medium"
           >
-            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is a premier technology consultancy dedicated to precision engineering and strategic innovation.
+            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is a premier leading software and technology consultancy dedicated to precision engineering and trustable innovation.
           </motion.p>
         </div>
 

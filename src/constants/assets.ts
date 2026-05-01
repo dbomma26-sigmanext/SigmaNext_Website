@@ -16,9 +16,9 @@ export const ASSETS = {
   },
   VECTORS: {
     HERO_VIDEO: {
-      PRIMARY: '/hero.mp4', // Digital Stream Dynamics
-      SECONDARY: 'https://videos.pexels.com/video-files/8524330/8524330-hd_1920_1080_25fps.mp4', // AI Neural Fold White
-      BACKUP_LOCAL: heroVideo, // Keep user upload as hidden fallback
+      PRIMARY: heroVideo, // Prioritize user-uploaded video
+      SECONDARY: 'https://videos.pexels.com/video-files/3130182/3130182-hd_1920_1080_30fps.mp4', // Digital Stream Dynamics
+      BACKUP_LOCAL: 'https://videos.pexels.com/video-files/8524330/8524330-hd_1920_1080_25fps.mp4', // AI Neural Fold White
       FALLBACK: 'https://cdn.pixabay.com/video/2023/11/02/187514-880479708_large.mp4'
     }
   },

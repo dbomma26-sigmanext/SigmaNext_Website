@@ -83,10 +83,10 @@ export function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 md:mb-10 leading-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.5)]">
-            Let's <span className="text-sigma-blue underline decoration-sigma-blue/50 underline-offset-[8px]">grow</span> business together
+            Leading <span className="text-sigma-blue underline decoration-sigma-blue/50 underline-offset-[8px]">Software</span> & Solution Experts
           </h1>
           <p className="text-sm sm:text-base md:text-xl text-white/90 max-w-3xl mx-auto mb-6 md:mb-12 leading-relaxed font-bold drop-shadow-[0_1px_10px_rgba(0,0,0,0.5)]">
-            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> provides cutting-edge application management, data analytics, and cyber security solutions to drive your business forward.
+            <span className="text-sigma-blue">Sigma</span><span className="text-sigma-yellow italic">Next</span> is your best-in-class partner for elite application management, data analytics, and trustable cyber security solutions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a href="#services" onClick={scrollToServices}>

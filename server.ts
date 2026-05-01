@@ -23,6 +23,19 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Email Transporter Helper
+  const getTransporter = () => {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST || "smtp.hostinger.com",
+      port: parseInt(process.env.SMTP_PORT || "465"),
+      secure: process.env.SMTP_SECURE !== "false",
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+  };
+
   // Googlebot Special Handler (Security Bypass for Crawlers)
   // Only serve minimal HTML if we detect a bot, otherwise let Vite handle it
   app.get("/", async (req, res, next) => {
@@ -79,29 +92,19 @@ async function startServer() {
 
       console.log(`Received application from ${fullName} for ${position}`);
 
-      // In a real production environment, you would use real SMTP credentials
-      // For this environment, we'll simulate the email sending logic
-      // but write it as if it's real.
-      
-      const transporter = nodemailer.createTransport({
-        // Example with a mock service or real SMTP
-        host: process.env.SMTP_HOST || "smtp.ethereal.email",
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        auth: {
-          user: process.env.SMTP_USER || "mock_user",
-          pass: process.env.SMTP_PASS || "mock_pass",
-        },
-      });
-
       const mailOptions = {
-        from: `"SigmaNext Careers" <careers@sigmanext.ai>`,
-        to: "contact@sigmanext.ai",
+        from: `"SigmaNext Careers" <${process.env.SMTP_USER || "careers@sigmanext.ai"}>`,
+        to: "hr@sigmanext.ai",
         subject: `New Career Application: ${position} - ${fullName}`,
         text: `
+          New job application received via SigmaNext website:
+          
           Name: ${fullName}
           Email: ${email}
           Position: ${position}
-          Cover Letter: ${coverLetter || "N/A"}
+          Cover Letter: ${coverLetter || "Not provided"}
+          
+          Date: ${new Date().toLocaleString()}
         `,
         attachments: file ? [
           {
@@ -111,9 +114,12 @@ async function startServer() {
         ] : [],
       };
 
-      // We log the attempt. In a real setup with valid credentials, this would send.
-      console.log("Sending email to contact@sigmanext.ai...");
-      // await transporter.sendMail(mailOptions); 
+      if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+        await getTransporter().sendMail(mailOptions);
+        console.log(`Email sent successfully to hr@sigmanext.ai from ${fullName}`);
+      } else {
+        console.warn("SMTP credentials not configured. Email NOT sent.");
+      }
       
       res.status(200).json({ message: "Application submitted successfully" });
     } catch (error) {
@@ -127,9 +133,29 @@ async function startServer() {
       const { firstName, lastName, email, message } = req.body;
       console.log(`Received contact message from ${firstName} ${lastName}`);
       
-      // Simulate email sending for contact form too
+      const mailOptions = {
+        from: `"SigmaNext Contact" <${process.env.SMTP_USER || "contact@sigmanext.ai"}>`,
+        to: "contact@sigmanext.ai",
+        subject: `New Contact Message from ${firstName} ${lastName}`,
+        text: `
+          New contact message received:
+          
+          Name: ${firstName} ${lastName}
+          Email: ${email}
+          Message: ${message}
+          
+          Date: ${new Date().toLocaleString()}
+        `,
+      };
+
+      if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+        await getTransporter().sendMail(mailOptions);
+        console.log(`Contact email sent successfully to contact@sigmanext.ai`);
+      }
+      
       res.status(200).json({ message: "Message sent successfully" });
     } catch (error) {
+      console.error("Error processing contact message:", error);
       res.status(500).json({ error: "Failed to send message" });
     }
   });

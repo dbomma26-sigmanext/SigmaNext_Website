@@ -72,7 +72,7 @@ export function Services() {
             viewport={{ once: true }}
             className="text-2xl md:text-5xl font-extrabold mb-2 text-slate-900"
           >
-            Our Core <span className="text-sigma-blue">Expertise</span>
+            Our <span className="text-sigma-blue">Best-in-class</span> Expertise
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export function Services() {
             transition={{ delay: 0.1 }}
             className="text-slate-500 text-sm md:text-lg max-w-2xl mx-auto font-medium"
           >
-            We deliver high-impact technology solutions across multiple domains to help your business stay ahead of the curve.
+            We deliver leading software and high-impact technology solutions across multiple domains with trustable results.
           </motion.p>
         </div>
 
