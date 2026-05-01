@@ -40,7 +40,10 @@ export function Contact() {
       }
 
       if (!response.ok) {
-        throw new Error(result.error || result.message || "Failed to send message. Please try again.");
+        let errorMessage = "Failed to send message. Please try again.";
+        if (result && result.error) errorMessage = result.error;
+        if (result && result.details) errorMessage += ` (${result.details})`;
+        throw new Error(errorMessage);
       }
 
       setIsSubmitted(true);

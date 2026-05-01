@@ -68,7 +68,10 @@ export function Careers() {
       }
       
       if (!response.ok) {
-        throw new Error(result.error || result.message || "Submission failed. Please check your connection and try again.");
+        let errorMessage = "Submission failed. Please check your connection and try again.";
+        if (result && result.error) errorMessage = result.error;
+        if (result && result.details) errorMessage += ` (${result.details})`;
+        throw new Error(errorMessage);
       }
       
       setIsSubmitted(true);

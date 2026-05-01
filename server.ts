@@ -6,10 +6,6 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log("Dotenv config attempt finished. SMTP_USER exists:", !!process.env.SMTP_USER);
-if (process.env.SMTP_USER) {
-  console.log("SMTP_USER is:", process.env.SMTP_USER);
-}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -139,27 +135,32 @@ async function startServer() {
 
   // Careers Submission
   app.post("/api/careers", (req, res, next) => {
-    console.log("[API] Careers POST received");
-    upload.single("resume")(req, res, (err) => {
-      if (err instanceof multer.MulterError) {
-        console.error("[API] Multer Error:", err);
-        return res.status(400).json({ error: `Upload error: ${err.message}` });
-      } else if (err) {
-        console.error("[API] Upload Error:", err);
-        return res.status(500).json({ error: `Unknown upload error: ${err.message}` });
-      }
-      next();
-    });
+    console.log(`[API] Careers POST received from ${req.ip}`);
+    try {
+      upload.single("resume")(req, res, (err) => {
+        if (err) {
+          console.error("[API] Multer processing error:", err);
+          return res.status(err instanceof multer.MulterError ? 400 : 500).json({ 
+            error: `File upload error: ${err.message}` 
+          });
+        }
+        next();
+      });
+    } catch (criticalErr) {
+      console.error("[API] Critical Multer failure:", criticalErr);
+      res.status(500).json({ error: "Internal server error during file processing." });
+    }
   }, async (req, res) => {
     try {
       const { fullName, email, position, coverLetter } = req.body;
       const file = req.file;
 
       if (!fullName || !email || !position) {
+        console.warn("[API] Careers missing fields:", { fullName: !!fullName, email: !!email, position: !!position });
         return res.status(400).json({ error: "Missing required fields: fullName, email, or position." });
       }
 
-      console.log(`[API] Processing application for ${fullName} (${position})`);
+      console.log(`[API] Processing career application for ${fullName} (${position}). Resume: ${file ? 'Yes' : 'No'}`);
 
       const mailOptions = {
         from: `"SigmaNext Careers" <${process.env.SMTP_USER || "hr@sigmanext.ai"}>`,
@@ -174,6 +175,7 @@ async function startServer() {
           Cover Letter: ${coverLetter || "Not provided"}
           
           Date: ${new Date().toLocaleString()}
+          Environment: ${process.env.VERCEL ? 'Vercel' : 'Local/Dev'}
         `,
         attachments: file ? [
           {
@@ -183,17 +185,19 @@ async function startServer() {
         ] : [],
       };
 
-      await getTransporter().sendMail(mailOptions);
-      console.log(`[API] Application from ${fullName} mailed to hr@sigmanext.ai`);
+      const transporter = getTransporter();
+      await transporter.sendMail(mailOptions);
+      console.log(`[API] Application from ${fullName} mailed successfully.`);
       
       res.status(200).json({ 
         success: true,
-        message: "Thank you! Your application has been submitted successfully to our HR team." 
+        message: "Thank you! Your application has been submitted successfully." 
       });
     } catch (error) {
       console.error("[API] Career Submission Error:", error);
       res.status(500).json({ 
-        error: error instanceof Error ? error.message : "Failed to submit application. Please try again later." 
+        error: "Failed to send application email. Please check your SMTP configuration.",
+        details: error instanceof Error ? error.message : String(error)
       });
     }
   });
@@ -202,7 +206,7 @@ async function startServer() {
   app.post("/api/contact", async (req, res) => {
     try {
       const { firstName, lastName, email, message } = req.body;
-      console.log(`[API] Processing contact message from ${firstName} ${lastName}`);
+      console.log(`[API] Contact POST received from ${firstName} ${lastName} (${email})`);
       
       if (!firstName || !email || !message) {
         return res.status(400).json({ error: "Missing required fields: firstName, email, or message." });
@@ -220,20 +224,23 @@ async function startServer() {
           Message: ${message}
           
           Date: ${new Date().toLocaleString()}
+          Environment: ${process.env.VERCEL ? 'Vercel' : 'Local/Dev'}
         `,
       };
 
-      await getTransporter().sendMail(mailOptions);
-      console.log(`[API] Contact message from ${firstName} mailed to contact@sigmanext.ai`);
+      const transporter = getTransporter();
+      await transporter.sendMail(mailOptions);
+      console.log(`[API] Contact message from ${firstName} mailed successfully.`);
       
       res.status(200).json({ 
         success: true,
-        message: "Your message has been sent successfully. We will get back to you shortly." 
+        message: "Your message has been sent successfully." 
       });
     } catch (error) {
       console.error("[API] Contact Form Error:", error);
       res.status(500).json({ 
-        error: error instanceof Error ? error.message : "Failed to send message. Please try again later." 
+        error: "Failed to send contact email. Please verify SMTP settings.",
+        details: error instanceof Error ? error.message : String(error)
       });
     }
   });
@@ -243,7 +250,12 @@ async function startServer() {
     console.warn(`[API] 404 hit for ${req.method} ${req.url}`);
     res.status(404).json({ 
       error: "Not Found", 
-      message: `API route ${req.method} ${req.url} does not exist.`
+      message: `API route ${req.method} ${req.url} does not exist.`,
+      debug: {
+        env: process.env.NODE_ENV,
+        vercel: !!process.env.VERCEL,
+        smtpConfigured: !!(process.env.SMTP_USER && process.env.SMTP_PASS)
+      }
     });
   });
 
