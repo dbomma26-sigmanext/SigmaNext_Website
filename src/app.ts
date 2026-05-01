@@ -60,9 +60,11 @@ export async function createApp() {
 
       if (!fullName || !email || !position) return res.status(400).json({ error: "Missing required fields." });
 
+      const authUser = process.env.SMTP_USER || "hr@sigmanext.ai";
       const mailOptions = {
-        from: `"SigmaNext Careers" <${process.env.SMTP_USER || "hr@sigmanext.ai"}>`,
+        from: `"SigmaNext Careers" <${authUser}>`,
         to: "hr@sigmanext.ai",
+        replyTo: email,
         subject: `New Application: ${position} - ${fullName}`,
         text: `Name: ${fullName}\nEmail: ${email}\nPosition: ${position}\nCover Letter: ${coverLetter || "None"}`,
         attachments: file ? [{ filename: file.originalname, content: file.buffer }] : [],
@@ -71,6 +73,7 @@ export async function createApp() {
       await getTransporter().sendMail(mailOptions);
       res.status(200).json({ success: true, message: "Application submitted successfully." });
     } catch (error) {
+      console.error("[API] Careers Error:", error);
       res.status(500).json({ error: "Failed to send email.", details: error instanceof Error ? error.message : String(error) });
     }
   });
@@ -81,16 +84,19 @@ export async function createApp() {
       const { firstName, lastName, email, message } = req.body;
       if (!firstName || !email || !message) return res.status(400).json({ error: "Missing required fields." });
 
+      const authUser = process.env.SMTP_USER || "hr@sigmanext.ai";
       const mailOptions = {
-        from: `"SigmaNext Contact" <${process.env.SMTP_USER || "contact@sigmanext.ai"}>`,
+        from: `"SigmaNext Contact" <${authUser}>`,
         to: "contact@sigmanext.ai",
-        subject: `Contact from ${firstName} ${lastName}`,
+        replyTo: email,
+        subject: `New Contact Message from ${firstName} ${lastName}`,
         text: `Name: ${firstName} ${lastName}\nEmail: ${email}\nMessage: ${message}`,
       };
 
       await getTransporter().sendMail(mailOptions);
       res.status(200).json({ success: true, message: "Message sent successfully." });
     } catch (error) {
+      console.error("[API] Contact Error:", error);
       res.status(500).json({ error: "Failed to send message.", details: error instanceof Error ? error.message : String(error) });
     }
   });
