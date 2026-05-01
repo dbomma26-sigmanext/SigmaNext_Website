@@ -32,8 +32,8 @@ export function Contact() {
         result = await response.json();
       } else {
         const text = await response.text();
-        console.error("Unexpected response from server:", text);
-        throw new Error("Server returned an unexpected response. Please try again later.");
+        console.error(`Unexpected response (${response.status}):`, text);
+        throw new Error(`Server returned an unexpected response (${response.status}). Please try again later.`);
       }
 
       if (!response.ok) {

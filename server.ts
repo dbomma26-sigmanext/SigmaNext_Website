@@ -7,6 +7,10 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 
 dotenv.config();
+console.log("Dotenv config attempt finished. SMTP_USER exists:", !!process.env.SMTP_USER);
+if (process.env.SMTP_USER) {
+  console.log("SMTP_USER is:", process.env.SMTP_USER);
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,29 +28,31 @@ async function startServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  // Debug Logger
+  // Debug Logger - Log everything
   app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    console.log(`[DEBUG] ${new Date().toISOString()} - ${req.method} ${req.url}`);
+    console.log(`[DEBUG] Headers: ${JSON.stringify(req.headers)}`);
     next();
   });
 
   // Email Transporter Helper
   const getTransporter = () => {
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-      throw new Error("SMTP credentials are not configured. Please set SMTP_USER and SMTP_PASS in your environment settings.");
-    }
+    const user = process.env.SMTP_USER || "hr@sigmanext.ai";
+    const pass = process.env.SMTP_PASS || "Welcome26@4";
+    const host = process.env.SMTP_HOST || "smtp.hostinger.com";
+    const port = parseInt(process.env.SMTP_PORT || "465");
+    const secure = process.env.SMTP_SECURE !== "false";
+
+    console.log(`Initializing transporter for ${user} on ${host}:${port} (secure: ${secure})`);
 
     return nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.hostinger.com",
-      port: parseInt(process.env.SMTP_PORT || "465"),
-      secure: process.env.SMTP_SECURE !== "false",
-      auth: {
-        user: process.env.SMTP_USER || "hr@sigmanext.ai",
-        pass: process.env.SMTP_PASS || "Welcome26@4",
-      },
-      // Increase timeout for slow SMTP servers
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
+      host,
+      port,
+      secure,
+      auth: { user, pass },
+      connectionTimeout: 15000,
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
     });
   };
 
