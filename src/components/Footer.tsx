@@ -14,26 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-20">
           <div className="space-y-8">
             <div className="flex items-center gap-2 group">
-              <img 
-                src={ASSETS.LOGO.PRIMARY} 
-                alt="SigmaNext Logo" 
-                className="h-12 w-auto object-contain transition-all duration-500 group-hover:scale-105"
-                onError={(e) => {
-                  const img = e.currentTarget;
-                  if (!img.dataset.triedSecondary) {
-                    img.dataset.triedSecondary = "true";
-                    img.src = ASSETS.LOGO.SECONDARY;
-                  } else if (!img.dataset.triedExternal) {
-                    img.dataset.triedExternal = "true";
-                    img.src = ASSETS.LOGO.EXTERNAL;
-                  } else {
-                    img.style.display = 'none';
-                    const textFallback = img.parentElement?.querySelector('.footer-logo-fallback') as HTMLElement;
-                    if (textFallback) textFallback.classList.remove('hidden');
-                  }
-                }}
-              />
-              <div className="footer-logo-fallback hidden flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center">
                   <span className="text-white font-bold">Σ</span>
                 </div>
