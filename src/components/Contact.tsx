@@ -98,7 +98,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="font-bold text-slate-900 text-base">Call Us</p>
-                  <p className="text-slate-500 text-sm font-medium">+1-469-918-2081</p>
+                  <p className="text-slate-500 text-sm font-medium">+1-469-619-2345</p>
                 </div>
               </div>
 
