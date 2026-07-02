@@ -52,7 +52,7 @@ export function Footer() {
               </li>
               <li className="text-slate-500 font-bold">
                 <span className="block text-slate-900 text-xs uppercase tracking-widest mb-1">Phone</span>
-                +1-469-918-2081
+                +1-469-619-2345
               </li>
               <li className="text-slate-500 font-bold">
                 <span className="block text-slate-900 text-xs uppercase tracking-widest mb-1">Address</span>
